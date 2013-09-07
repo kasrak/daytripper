@@ -27,8 +27,8 @@ app.factory('Foursquare', function($rootScope) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
-		this.ll = [43.652, -79.382];
-		this.getNext([43.652, -79.382], 'B');
+		//this.ll = [43.652, -79.382];
+		//this.getNext([43.652, -79.382], 'B');
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -86,13 +86,20 @@ app.factory('Foursquare', function($rootScope) {
 
 		var temp = scores.slice(0);
 		temp.sort(function(a,b){return a-b});
-		return scores.indexOf(temp[temp.length-Math.floor((Math.random()*10))-1]);
+		console.log(venues);
+		var picks;
+		if (venues.length >10)
+			picks = 10;
+		else
+			picks = venues.length;
+		return scores.indexOf(temp[temp.length-Math.floor((Math.random()*picks))-1]);
 	};
 
 	Foursquare.prototype.append = function(venues){
-		console.log(this.route);
 		if (venues != null)
 			this.route.push(venues[this.getBest(venues)]);
+
+		console.log(this.route);
 
 		switch(this.route.length){
 			case 1:
@@ -143,7 +150,7 @@ app.factory('Foursquare', function($rootScope) {
 		var self =  this;
 		switch(type){
 			case 'T':
-				category = [MALL, MARKET, NEIGHBORHOOD, LANDMARKS, AQUARIUM, GALLERY, CASINO, HISTORIC, MUSEUM, STADIUM];
+				category = [MALL, MARKET, NEIGHBORHOOD, LANDMARKS, AQUARIUM, GALLERY, CASINO, HISTORIC, MUSEUM];
 				break;
 			case 'B':
 				category = [BREAKFAST];
@@ -162,7 +169,7 @@ app.factory('Foursquare', function($rootScope) {
 
 		$.getJSON(url, function(data){
 			data = data.response.groups[0].items;
-			if (data.length < 1)
+			if (data == null)
 				this.done();
 			if (action == 'a')	
 				self.append(data);
