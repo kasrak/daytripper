@@ -48,9 +48,6 @@ button {
   background-image: -o-linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%);
   background-image: linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%);
 }
-button:hover {
-  box-shadow: 0 0 7px rgba(173, 255, 0, 0.6);
-}
 button:active {
   box-shadow: 0 1px 4px rgba(27, 27, 27, 0.6) inset;
   border-color: rgba(39, 44, 39, 0.64);

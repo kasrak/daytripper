@@ -1,3 +1,11 @@
+"use strict";
+/*global window: false */
+/*global angular: false */
+/*global app: false */
+/*global $: false */
+/*global console: false */
+/*jshint globalstrict: true */
+
 window.app = angular.module('app', []);
 
 app.filter('addr_part', function() {
