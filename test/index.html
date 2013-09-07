@@ -28,7 +28,11 @@
 				var HISTORIC = "4deefb944765f83613cdba6e";
 				var MUSEUM = "4bf58dd8d48988d181941735";
 				var STADIUM = "4bf58dd8d48988d184941735";
-				var category = [LANDMARKS, AQUARIUM, GALLERY, CASINO, ENTERTAINMENT, HISTORIC, MUSEUM, STADIUM];
+				var NEIGHBORHOOD = "4f2a25ac4b909258e854f55f";
+				var MALL = "4bf58dd8d48988d1fd941735";
+				var MARKET = "4bf58dd8d48988d1fa941735";
+				
+				var category = [MALL, MARKET, NEIGHBORHOOD, LANDMARKS, AQUARIUM, GALLERY, CASINO, ENTERTAINMENT, HISTORIC, MUSEUM, STADIUM];
 				var ll = [43.65, -79.38]; 
 				var radius = 80000;
 				var url = "https://api.foursquare.com/v2/venues/search?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&categoryId="+getStrList(category)+"&ll="+getStrList(ll)+"&radius="+radius+"&intent=browse";
