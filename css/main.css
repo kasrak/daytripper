@@ -15,6 +15,7 @@ h1 {
 }
 input,
 button {
+  box-sizing: border-box;
   font: inherit;
   border-radius: 3px;
   border: 1px solid #aaa;
@@ -63,14 +64,32 @@ button:active {
   margin: 80px auto 0;
   text-align: left;
 }
-.screen-plan-form .city {
-  width: 380px;
+.screen-plan-form h1 {
+  line-height: 1;
+  font-size: 22pt;
 }
-.screen-plan-form .city-autocomplete {
+.screen-plan-form input.address {
+  width: 100%;
+}
+.screen-plan-form ul.autocomplete {
   list-style: none;
   margin: 0;
   padding: 0;
+  width: 100%;
+  border-radius: 3px;
+  background: #ddd;
+  overflow: hidden;
 }
-.screen-plan-form .city-autocomplete li {
+.screen-plan-form ul.autocomplete li {
   padding: 5px;
+  border-bottom: 1px solid #bbb;
+  cursor: pointer;
+  color: #456;
+}
+.screen-plan-form ul.autocomplete li:hover,
+.screen-plan-form ul.autocomplete li.selected {
+  background: #fff;
+}
+.screen-plan-form ul.autocomplete li:last-child {
+  border-bottom: 0;
 }

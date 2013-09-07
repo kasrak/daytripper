@@ -8,23 +8,22 @@
         <script src="/js/lib/angular.min.js"></script>
 
         <script src="/js/app.js"></script>
-        <script src="/js/services/cities.js"></script>
+        <script src="/js/services/addresses.js"></script>
 
         <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body ng-app="app">
         <div class="screen-plan-form" ng-controller="PlanForm">
-            <h1>Plan your trip</h1>
+            <h1>Where are you staying?</h1>
 
-            <input type="text" placeholder="City" class="city" ng-model="city">
-            <button>Let's go</button>
+            <input type="text" placeholder="Address" class="address" ng-model="currentAddress">
 
-            <ul class="city-autocomplete" ng-hide="cities.list.length == 0">
-                <li ng-repeat="city in cities.list">
-                    <span class="name">{{ city.toponymName }}</span>
-                    <span class="state">{{ city.adminName1 }}</span>
-                    <span class="country">{{ city.countryName }}</span>
+            <ul class="autocomplete">
+                <li ng-repeat="address in addresses.list"
+                    ng-click="setAddress(address)"
+                    ng-class="{ selected: (addresses.selected == address) }">
+                {{ address }}
                 </li>
             </ul>
         </div>
