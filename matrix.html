@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Distance Matrix service</title>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			#content-pane {
+				padding-left: 2%;
+			}
+			#outputDiv {
+				font-size: 11px;
+			}
+		</style>
+		<script>
+
+var origin1 = 'Ritz Carlton, Toronto';
+var origin2 = 'Vaughan';
+var destinationA = 'Center Island, Toronto';
+var destinationB = 'Rogers Centre';
+
+//var origin1 = new google.maps.LatLng(55.930, -3.118);
+
+function calculateDistances() {
+	var service = new google.maps.DistanceMatrixService();
+	service.getDistanceMatrix(
+		{
+			origins: [origin1, origin2],
+			destinations: [destinationA, destinationB],
+			travelMode: google.maps.TravelMode.WALKING,
+			unitSystem: google.maps.UnitSystem.METRIC,
+			avoidHighways: false,
+			avoidTolls: false
+		}, callback);
+}
+
+function callback(response, status) {
+	if (status != google.maps.DistanceMatrixStatus.OK) {
+		alert('Error was: ' + status);
+	} else {
+		var origins = response.originAddresses;
+		var destinations = response.destinationAddresses;
+		var outputDiv = document.getElementById('outputDiv');
+		outputDiv.innerHTML = '';
+
+		for (var i = 0; i < origins.length; i++) {
+			var results = response.rows[i].elements;
+			for (var j = 0; j < results.length; j++) {
+				outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
+						+ ': ' + results[j].distance.text + ' in '
+						+ results[j].duration.text + '<br>';
+			}
+		}
+	}
+}
+
+		</script>
+	</head>
+	<body>
+		<div id="content-pane">
+			<div id="inputs">
+				<pre>
+var origin1 = 'Ritz Carlton, Toronto';
+var origin2 = 'Vaughan';
+var destinationA = 'Center Island, Toronto';
+var destinationB = 'Rogers Centre';
+				</pre>
+				<p><button type="button" onclick="calculateDistances();">Calculate
+					distances</button></p>
+			</div>
+			<div id="outputDiv"></div>
+		</div>
+	</body>
+</html>
