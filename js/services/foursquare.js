@@ -73,7 +73,8 @@ app.factory('Foursquare', function($rootScope) {
 	};
 
 	Foursquare.prototype.append = function(venues){
-		this.route.push(venues[this.getBest(venues)]);
+		if (venues != null)
+			this.route.push(venues[this.getBest(venues)]);
 
 		switch(this.route.length){
 			case 1:
@@ -126,6 +127,7 @@ app.factory('Foursquare', function($rootScope) {
 		})
 		.fail(function(error){
 			console.log("Foursquare search error: ", error);
+			self.append();
 		});
     };
 
