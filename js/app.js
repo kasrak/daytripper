@@ -1,12 +1,13 @@
 window.app = angular.module('app', []);
 
-app.controller('PlanForm', function($scope, Addresses) {
+app.controller('PlanForm', function($scope, Addresses, Map) {
     $scope.addresses = Addresses;
+    $scope.addressInput = null;
     $scope.currentAddress = null;
 
     var shouldAutocomplete = true;
 
-    $scope.$watch('currentAddress', function(newVal, oldVal) {
+    $scope.$watch('addressInput', function(newVal, oldVal) {
         if (newVal == oldVal || newVal.trim().length <= 3) return;
         if (!shouldAutocomplete) {
             shouldAutocomplete = true;
@@ -19,6 +20,8 @@ app.controller('PlanForm', function($scope, Addresses) {
         shouldAutocomplete = false;
         Addresses.clear();
         $scope.currentAddress = address;
+        $scope.addressInput = address.formatted_address;
+        Map.setCenter(address.geometry.location.lat, address.geometry.location.lng, 14);
     };
 
     $(function() {
@@ -45,8 +48,7 @@ app.controller('PlanForm', function($scope, Addresses) {
             $.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true', function(data) {
                 $scope.$apply(function() {
                     if ($scope.currentAddress === null) {
-                        shouldAutocomplete = false;
-                        $scope.currentAddress = data.results[0].formatted_address;
+                        $scope.setAddress(data.results[0]);
                     }
                 });
             });

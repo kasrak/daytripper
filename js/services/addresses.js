@@ -19,7 +19,6 @@ app.factory('Addresses', function($rootScope) {
     };
 
     Addresses.prototype.down = function() {
-        debugger;
         if (this.list.length === 0) return;
         if (this.selectedIdx == -1) {
             this.selectedIdx = 0;
@@ -40,9 +39,7 @@ app.factory('Addresses', function($rootScope) {
             success: function(data) {
                 if (data.status == 'OK') {
                     $rootScope.$apply(function() {
-                        self.list = _.map(data.results, function(result) {
-                            return result.formatted_address;
-                        });
+                        self.list = data.results;
                     });
                 } else if (data.status == 'ZERO_RESULTS') {
                     self.list = [];

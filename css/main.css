@@ -22,14 +22,14 @@ button {
   padding: 5px;
   background: #eee;
   background: rgba(255, 255, 255, 0.8);
+  margin: 3px 0;
   -webkit-transition: all 200ms;
   -moz-transition: all 200ms;
   -o-transition: all 200ms;
   -ms-transition: all 200ms;
   transition: all 200ms;
 }
-input:focus,
-button:focus {
+input:focus {
   outline: none;
   background: #fff;
   box-shadow: 0 0 7px rgba(173, 255, 0, 0.6);
@@ -52,9 +52,22 @@ button:hover {
   box-shadow: 0 0 7px rgba(173, 255, 0, 0.6);
 }
 button:active {
-  box-shadow: 0 1px 4px rgba(27, 27, 27, 0.78) inset;
-  border-color: #272C27;
+  box-shadow: 0 1px 4px rgba(27, 27, 27, 0.6) inset;
+  border-color: rgba(39, 44, 39, 0.64);
   color: #ddd;
+}
+#mapbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -999;
+}
+#mapbox .map,
+#mapbox .blur {
+  width: 100%;
+  height: 100%;
 }
 /*
  * Plan form screen
@@ -63,10 +76,18 @@ button:active {
   width: 500px;
   margin: 80px auto 0;
   text-align: left;
+  z-index: 999;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  text-align: center;
 }
 .screen-plan-form h1 {
   line-height: 1;
   font-size: 22pt;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  color: #ffec62;
 }
 .screen-plan-form input.address {
   width: 100%;
@@ -79,6 +100,7 @@ button:active {
   border-radius: 3px;
   background: #ddd;
   overflow: hidden;
+  text-align: left;
 }
 .screen-plan-form ul.autocomplete li {
   padding: 5px;
