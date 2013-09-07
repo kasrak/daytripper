@@ -37,7 +37,7 @@
 
                 <ul class="autocomplete" ng-show="addresses.list.length > 0">
                     <li ng-repeat="address in addresses.list"
-                        ng-click="setAddress(address)"
+                        ng-click="setAddress(address, 1)"
                         ng-class="{ selected: (addresses.selected == address) }">
                     {{ address.formatted_address }}
                     </li>

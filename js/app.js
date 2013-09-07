@@ -45,12 +45,16 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
         Addresses.autocomplete(newVal);
     });
 
-    $scope.setAddress = function(address) {
+    $scope.setAddress = function(address, startImmediately) {
         shouldAutocomplete = false;
         Addresses.clear();
         $scope.currentAddress = address;
         $scope.addressInput = address.formatted_address;
         Map.setCenter(address.geometry.location.lat, address.geometry.location.lng, 14);
+
+        if (startImmediately) {
+            $scope.startPlanning();
+        }
     };
 
     $scope.startPlanning = function() {
@@ -88,7 +92,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
                     Addresses.up();
                 } else if (e.keyCode == 13) { // enter
                     if (Addresses.selected) {
-                        $scope.setAddress(Addresses.selected);
+                        $scope.setAddress(Addresses.selected, true);
                     }
                 }
             });
