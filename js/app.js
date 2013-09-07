@@ -1,9 +1,38 @@
+"use strict";
+/*global window: false */
+/*global angular: false */
+/*global app: false */
+/*global $: false */
+/*global console: false */
+/*jshint globalstrict: true */
+
 window.app = angular.module('app', []);
 
-app.controller('PlanForm', function($scope, Addresses, Map, Foursquare) {
+app.filter('addr_part', function() {
+    return function(address, type) {
+        if (!address) {
+            return;
+        }
+
+        var comps = address.address_components, comp;
+
+        for (var i = 0; i < comps.length; i++) {
+            comp = comps[i];
+            if (comp.types.indexOf(type) != -1) {
+                return comp.long_name;
+            }
+        }
+    };
+});
+
+app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places, Foursquare) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
     $scope.currentAddress = null;
+
+    $scope.loading = false;
+
+    var $progressBar;
 
     var shouldAutocomplete = true;
 
@@ -24,7 +53,28 @@ app.controller('PlanForm', function($scope, Addresses, Map, Foursquare) {
         Map.setCenter(address.geometry.location.lat, address.geometry.location.lng, 14);
     };
 
+    $scope.startPlanning = function() {
+        $scope.loading = true;
+
+        var progress = 5;
+        var incrementProgress = function() {
+            progress += 20;
+            $progressBar.css('width', progress + '%');
+            if (progress < 100) {
+                window.setTimeout(incrementProgress, 100);
+            } else {
+                window.setTimeout(function() {
+                    Places.show();
+                    $($element).hide();
+                }, 700);
+            }
+        };
+        window.setTimeout(incrementProgress, 500);
+    };
+
     $(function() {
+        $progressBar = $('.loading .progress');
+
         $('input.address').on('click', function() {
             this.select();
         }).on('keydown', function(e) {
@@ -57,6 +107,10 @@ app.controller('PlanForm', function($scope, Addresses, Map, Foursquare) {
         });
 
     });
+});
+
+app.controller('PlacesController', function($scope) {
+
 });
 
 if (typeof String.prototype.startsWith != 'function') {
