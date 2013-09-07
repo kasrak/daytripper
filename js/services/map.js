@@ -120,7 +120,7 @@ app.factory('Map', function() {
            origin: start,
            destination: end,
            waypoints:waypts,
-           travelMode: google.maps.DirectionsTravelMode.WALKING;
+           travelMode: google.maps.DirectionsTravelMode.WALKING
        };
        directionService.route(request, function(response,status) {
            if (status != google.maps.DirectionsStatus.OK) {
@@ -128,7 +128,7 @@ app.factory('Map', function() {
            } else {
                directionsDisplay.setDirections(response);
            }
-       };
-    }
+       });
+    };
     return map;
 });
