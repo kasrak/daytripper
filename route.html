@@ -77,15 +77,14 @@ function calcRoute(pointa,pointb) {
 }
 
 function marker(lat,lon,label) {
+    var bounds = map.getBounds();
     var position = new google.maps.LatLng(lat,lon);
-    var image = new google.maps.MarkerImage(
-        "http://frobeo.com/img/pin" + label + ".png",
-        new google.maps.Size(30,32)
-    );
+    bounds.extend(position);
+    map.fitBounds(bounds);
     var marker = new google.maps.Marker({
         position: position,
         map: map,
-        icon: image
+        icon: "http://frobeo.com/img/pin" + label + ".png"
     });
 }
 
@@ -97,7 +96,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         <div id="panel">
             <button type="button" onClick="calcRoute('TD center, toronto',
                 'rogers center, toronto');">Calculate route</button>
-            <button type="button" onClick="marker(43.645,-79.387,'h');">Marker</button>
+            <button type="button" onClick="marker(43.647917,-79.380833,'h');">Marker</button>
         </div>
         <div id="map-canvas"></div>
         <div id="directions-panel"></div>
