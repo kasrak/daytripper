@@ -21,6 +21,17 @@ button {
   padding: 5px;
   background: #eee;
   background: rgba(255, 255, 255, 0.8);
+  -webkit-transition: all 200ms;
+  -moz-transition: all 200ms;
+  -o-transition: all 200ms;
+  -ms-transition: all 200ms;
+  transition: all 200ms;
+}
+input:focus,
+button:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 7px rgba(173, 255, 0, 0.6);
 }
 button {
   padding-left: 10px;
@@ -28,21 +39,38 @@ button {
   text-align: center;
   cursor: pointer;
   color: #eee;
+  border-color: #2b5c2b;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMSAxIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQtdWNnZy1nZW5lcmF0ZWQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2YTMzYSIgc3RvcC1vcGFjaXR5PSIxIi8+PHN0b3Agb2Zmc2V0PSI5MyUiIHN0b3AtY29sb3I9IiM0NDg3M2YiIHN0b3Atb3BhY2l0eT0iMSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzMxNzczNSIgc3RvcC1vcGFjaXR5PSIxIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPjwvc3ZnPg==);
   background-image: -moz-linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%);
   background-image: -webkit-linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%);
   background-image: -o-linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%);
   background-image: linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%);
-  border-color: #2b5c2b;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
-input:focus {
-  outline: none;
-  background: #fff;
+button:hover {
+  box-shadow: 0 0 7px rgba(173, 255, 0, 0.6);
+}
+button:active {
+  box-shadow: 0 1px 4px rgba(27, 27, 27, 0.78) inset;
+  border-color: #272C27;
+  color: #ddd;
 }
 /*
  * Plan form screen
  */
+.screen-plan-form {
+  width: 500px;
+  margin: 80px auto 0;
+  text-align: left;
+}
 .screen-plan-form .city {
   width: 380px;
+}
+.screen-plan-form .city-autocomplete {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.screen-plan-form .city-autocomplete li {
+  padding: 5px;
 }

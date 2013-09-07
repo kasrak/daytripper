@@ -7,15 +7,26 @@
         <script src="/js/lib/jquery.min.js"></script>
         <script src="/js/lib/angular.min.js"></script>
 
+        <script src="/js/app.js"></script>
+        <script src="/js/services/cities.js"></script>
+
         <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="/css/main.css">
     </head>
-    <body>
-        <div class="screen-plan-form">
+    <body ng-app="app">
+        <div class="screen-plan-form" ng-controller="PlanForm">
             <h1>Plan your trip</h1>
 
-            <input type="text" placeholder="City" class="city">
+            <input type="text" placeholder="City" class="city" ng-model="city">
             <button>Let's go</button>
+
+            <ul class="city-autocomplete" ng-hide="cities.list.length == 0">
+                <li ng-repeat="city in cities.list">
+                    <span class="name">{{ city.toponymName }}</span>
+                    <span class="state">{{ city.adminName1 }}</span>
+                    <span class="country">{{ city.countryName }}</span>
+                </li>
+            </ul>
         </div>
     </body>
 </html>

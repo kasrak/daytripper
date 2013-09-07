@@ -25,6 +25,14 @@ input, button {
     padding: 5px;
     background: #eee;
     background: rgba(255, 255, 255, 0.8);
+
+    .transition(~"all 200ms");
+
+    &:focus {
+        outline: none;
+        background: #fff;
+        box-shadow: 0 0 7px rgba(173, 255, 0, 0.6);
+    }
 }
 
 button {
@@ -33,20 +41,42 @@ button {
     text-align: center;
     cursor: pointer;
     color: #eee;
-    .gradient(~"linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%)");
     border-color: rgb(43, 92, 43);
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-}
 
-input:focus {
-    outline: none;
-    background: #fff;
+    .gradient(~"linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%)");
+
+    &:hover {
+        box-shadow: 0 0 7px rgba(173, 255, 0, 0.6);
+    }
+
+    &:active {
+        box-shadow: 0 1px 4px rgba(27, 27, 27, 0.78) inset;
+        border-color: #272C27;
+        color: #ddd;
+    }
 }
 
 /*
  * Plan form screen
  */
 
-.screen-plan-form .city {
-    width: 380px;
+.screen-plan-form {
+    width: 500px;
+    margin: 80px auto 0;
+    text-align: left;
+
+    .city {
+        width: 380px;
+    }
+
+    .city-autocomplete {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            padding: 5px;
+        }
+    }
 }
