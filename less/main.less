@@ -154,7 +154,8 @@ button {
     width: 400px;
     text-align: left;
     -webkit-transform: translateZ(1px);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     border-left: 1px solid #aaa;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
     .transition(~"transform 200ms");
@@ -192,9 +193,14 @@ button {
             border-bottom: 1px solid #aaa;
             clear: both;
             cursor: pointer;
+            position: relative;
 
             &:hover {
                 background: #fff;
+
+                .controls {
+                    display: block;
+                }
             }
 
             &:active {
@@ -233,6 +239,31 @@ button {
 
             h2 {
                 margin: 0;
+            }
+
+            .controls {
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background: #ddd;
+                width: 20px;
+                text-align: center;
+                display: none;
+                box-shadow: 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+
+                span.control {
+                    display: block;
+
+                    i {
+                        display: block;
+                        margin-bottom: 29px;
+                    }
+
+                    &:hover {
+                        color: rgb(105, 158, 107);
+                    }
+                }
             }
         }
     }

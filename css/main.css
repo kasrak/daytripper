@@ -138,7 +138,8 @@ button:active {
   width: 400px;
   text-align: left;
   -webkit-transform: translateZ(1px);
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   border-left: 1px solid #aaa;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
   -webkit-transition: -webkit-transform 200ms;
@@ -189,9 +190,13 @@ button:active {
   border-bottom: 1px solid #aaa;
   clear: both;
   cursor: pointer;
+  position: relative;
 }
 .screen-places ul li:hover {
   background: #fff;
+}
+.screen-places ul li:hover .controls {
+  display: block;
 }
 .screen-places ul li:active {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
@@ -225,4 +230,25 @@ button:active {
 }
 .screen-places ul li h2 {
   margin: 0;
+}
+.screen-places ul li .controls {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #ddd;
+  width: 20px;
+  text-align: center;
+  display: none;
+  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+}
+.screen-places ul li .controls span.control {
+  display: block;
+}
+.screen-places ul li .controls span.control i {
+  display: block;
+  margin-bottom: 29px;
+}
+.screen-places ul li .controls span.control:hover {
+  color: #699e6b;
 }
