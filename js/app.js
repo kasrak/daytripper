@@ -25,14 +25,12 @@ app.filter('addr_part', function() {
     };
 });
 
-app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places, Foursquare) {
+app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places, Progress) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
     $scope.currentAddress = null;
 
     $scope.loading = false;
-
-    var $progressBar;
 
     var shouldAutocomplete = true;
 
@@ -45,35 +43,34 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
         Addresses.autocomplete(newVal);
     });
 
-    $scope.setAddress = function(address) {
+    $scope.setAddress = function(address, startImmediately) {
         shouldAutocomplete = false;
         Addresses.clear();
         $scope.currentAddress = address;
         $scope.addressInput = address.formatted_address;
         Map.setCenter(address.geometry.location.lat, address.geometry.location.lng, 14);
+
+        if (startImmediately) {
+            $scope.startPlanning();
+        }
     };
 
     $scope.startPlanning = function() {
         $scope.loading = true;
 
-        var progress = 5;
-        var incrementProgress = function() {
-            progress += 20;
-            $progressBar.css('width', progress + '%');
-            if (progress < 100) {
-                window.setTimeout(incrementProgress, 100);
-            } else {
-                window.setTimeout(function() {
-                    Places.show();
-                    $($element).hide();
-                }, 700);
-            }
+        Progress.reset();
+        Places.load($scope.currentAddress.geometry.location.lat,
+                   $scope.currentAddress.geometry.location.lng);
+
+        Progress.onDone = function() {
+            window.setTimeout(function() {
+                Places.show();
+                $($element).hide();
+            }, 700);
         };
-        window.setTimeout(incrementProgress, 500);
     };
 
     $(function() {
-        $progressBar = $('.loading .progress');
 
         $('input.address').on('click', function() {
             this.select();
@@ -85,7 +82,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
                     Addresses.up();
                 } else if (e.keyCode == 13) { // enter
                     if (Addresses.selected) {
-                        $scope.setAddress(Addresses.selected);
+                        $scope.setAddress(Addresses.selected, true);
                     }
                 }
             });
@@ -105,12 +102,11 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
         }, function(error) {
             console.log('Geolocation error', error);
         });
-
     });
 });
 
-app.controller('PlacesController', function($scope) {
-
+app.controller('PlacesController', function($scope, Places) {
+    $scope.places = Places;
 });
 
 if (typeof String.prototype.startsWith != 'function') {
