@@ -90,7 +90,8 @@ app.factory('Map', function() {
             mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
         },
         panControl: false,
-        mapTypeControl: false
+        mapTypeControl: false,
+        streetViewControl: false
     };
 
 
