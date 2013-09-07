@@ -1,6 +1,6 @@
 window.app = angular.module('app', []);
 
-app.controller('PlanForm', function($scope, Addresses, Map) {
+app.controller('PlanForm', function($scope, Addresses, Map, Foursquare) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
     $scope.currentAddress = null;
@@ -55,6 +55,7 @@ app.controller('PlanForm', function($scope, Addresses, Map) {
         }, function(error) {
             console.log('Geolocation error', error);
         });
+
     });
 });
 
