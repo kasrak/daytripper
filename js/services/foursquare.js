@@ -25,6 +25,7 @@ app.factory('Foursquare', function($rootScope) {
 
     var Foursquare = function() {
 		this.route=[];
+		this.callback = null;
     };
 
 	
@@ -39,8 +40,9 @@ app.factory('Foursquare', function($rootScope) {
 		return str;
 	}
 
-	Foursquare.prototype.getRoute = function(ll){
+	Foursquare.prototype.getRoute = function(ll, callback){
 		this.getNext(ll, 'B');
+		this.callback = callback;
 	}
 	
 	Foursquare.prototype.alreadyInRoute = function(venue){
@@ -89,9 +91,9 @@ app.factory('Foursquare', function($rootScope) {
 			case 5:
 				this.getNext([this.route[4].location.lat,this.route[4].location.lng], 'T');
 				break;
+			case 6:
+				this.callback();
 		}
-
-		console.log(this.route);
 	};
 
 	Foursquare.prototype.getNext = function(ll, type) {
