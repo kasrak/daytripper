@@ -10,6 +10,8 @@
         <script src="/js/app.js"></script>
         <script src="/js/services/addresses.js"></script>
         <script src="/js/services/map.js"></script>
+        <script src="/js/services/matrix.js"></script>
+        <script src="/js/services/places.js"></script>
 
         <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700"
               rel="stylesheet" type="text/css">
@@ -23,18 +25,79 @@
         <div id="mapbox">
             <div class="map"></div>
         </div>
-        <div class="screen-plan-form" ng-controller="PlanForm">
-            <h1>Where are you staying?</h1>
+        <div class="screen-plan-form" ng-controller="PlanFormController">
+            <div class="main" ng-show="!loading">
+                <h1>Where are you staying?</h1>
 
-            <input type="text" placeholder="Address" class="address" ng-model="addressInput">
+                <input type="text" placeholder="Address" class="address" ng-model="addressInput">
 
-            <button ng-hide="addresses.list.length > 0 || !currentAddress">Plan my day</button>
+                <button ng-hide="addresses.list.length > 0 || !currentAddress"
+                        ng-click="startPlanning()">Plan my day</button>
 
-            <ul class="autocomplete" ng-show="addresses.list.length > 0">
-                <li ng-repeat="address in addresses.list"
-                    ng-click="setAddress(address)"
-                    ng-class="{ selected: (addresses.selected == address) }">
-                {{ address.formatted_address }}
+                <ul class="autocomplete" ng-show="addresses.list.length > 0">
+                    <li ng-repeat="address in addresses.list"
+                        ng-click="setAddress(address)"
+                        ng-class="{ selected: (addresses.selected == address) }">
+                    {{ address.formatted_address }}
+                    </li>
+                </ul>
+            </div>
+            <div class="loading" ng-hide="!loading">
+                <div class="message">Planning your day in {{ currentAddress | addr_part:'locality'  }}...</div>
+                <div class="progress"></div>
+            </div>
+        </div>
+
+        <div class="screen-places" ng-controller="PlacesController">
+            <h1>Places</h1>
+            <ul>
+                <li>
+                    <span class="type">Breakfast</span>
+                    <h2>
+                        <span class="marker">1</span>
+                        Patty's Eggs
+                    </h2>
+                    <span class="address">123 Sesame St</span>
+                </li>
+                <li>
+                    <span class="type">Museum</span>
+                    <h2>
+                        <span class="marker">2</span>
+                        ROM
+                    </h2>
+                    <span class="address">8000 University Ave</span>
+                </li>
+                <li>
+                    <span class="type">LUNCH</span>
+                    <h2>
+                        <span class="marker">3</span>
+                        Burger King
+                    </h2>
+                    <span class="address">23 Fat St</span>
+                </li>
+                <li>
+                    <span class="type">LUNCH</span>
+                    <h2>
+                        <span class="marker">3</span>
+                        Burger King
+                    </h2>
+                    <span class="address">23 Fat St</span>
+                </li>
+                <li>
+                    <span class="type">LUNCH</span>
+                    <h2>
+                        <span class="marker">3</span>
+                        Burger King
+                    </h2>
+                    <span class="address">23 Fat St</span>
+                </li>
+                <li>
+                    <span class="type">LUNCH</span>
+                    <h2>
+                        <span class="marker">3</span>
+                        Burger King
+                    </h2>
+                    <span class="address">23 Fat St</span>
                 </li>
             </ul>
         </div>
