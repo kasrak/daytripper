@@ -91,7 +91,11 @@ app.factory('Map', function() {
         },
         panControl: false,
         mapTypeControl: false,
-        streetViewControl: false
+        streetViewControl: false,
+        zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.SMALL,
+            position: google.maps.ControlPosition.RIGHT_TOP
+        }
     };
 
 
