@@ -27,26 +27,44 @@ app.factory('Foursquare', function($rootScope) {
 		this.route=[];
 		this.done = null;
 		this.progress = null;
+		this.foundcb = null;
+		this.ll = [43.652, -79.382];
+		this.getNext([43.652, -79.382], 'B');
     };
 
-	
 
-	function getStrList(cat){
-		//returns serialized list seperated by commas
-		var str = "";
-		for (var i = 0; i < cat.length-1; i++){
-			str += (cat[i]+",");
-		}
-		str += cat[cat.length-1];
-		return str;
-	}
-
-	Foursquare.prototype.getRoute = function(ll, callback, progress){
+	Foursquare.prototype.getRoute = function(ll, done, progress){
+		this.ll=ll;
 		this.getNext(ll, 'B');
 		this.done = done;
 		this.progress = progress;
-	}
-	
+	};
+
+	Foursquare.prototype.getMiddleVenue = function(ll1, ll2, type){
+		var ll = [(ll1[0]+ll2[0])/2, (ll1[1]+ll2[1])/2];
+		var radius = 8000; //to be calculated
+		this.call4sq(ll, radius, type, 'a');
+	};
+
+	Foursquare.prototype.replaceVenue = function(index, type, foundcb){
+		this.foundcb = foundcb;
+		this.index = index;
+		var lat = (this.route[index-1].location.lat + this.route[index+1].location.lat)/2;
+		var lng = (this.route[index-1].location.lng + this.route[index+1].location.lng)/2;
+		var radius = 8000; //to be calculated
+		this.call4sq(ll, radius, type, 'r');
+	};
+
+	Foursquare.prototype.getNext = function(ll, type) {
+		this.call4sq(ll, radius, type, 'a');
+    };
+
+
+	Foursquare.prototype.replace = function(venues){
+		this.route[this.index] = venues[this.getBest(venues)];	
+		this.foundcb();
+	};
+
 	Foursquare.prototype.alreadyInRoute = function(venue){
 		if (this.route == null)
 			return false;
@@ -60,7 +78,7 @@ app.factory('Foursquare', function($rootScope) {
 		var self = this;
 		var scores = [];
 		_.each(venues, function(venue){
-			if (venue.categories[0].name === "Coffee Shop" || venue.categories[0].name==="Hotel")
+			if (venue.categories[0].name === "Coffee Shop" || venue.categories[0].name==="Hotel" || venue.categories[0].name === "Office")
 				scores.push(0);
 			else if (self.alreadyInRoute(venue))
 				scores.push(0);
@@ -70,11 +88,11 @@ app.factory('Foursquare', function($rootScope) {
 		
 		var temp = scores.slice(0);
 		temp.sort(function(a,b){return a-b});
-		console.log(temp);
 		return scores.indexOf(temp[temp.length-Math.floor((Math.random()*10))-1]);
 	};
 
 	Foursquare.prototype.append = function(venues){
+		console.log(this.route);
 		if (venues != null)
 			this.route.push(venues[this.getBest(venues)]);
 
@@ -100,15 +118,32 @@ app.factory('Foursquare', function($rootScope) {
 				this.progress(5/6);
 				break;
 			case 6:
+				var radius = 10; //to be changed
+				this.getMiddleVenue([this.route[4].location.lat,this.route[4].location.lng],this.ll, 'N');
+				this.progress(6/6);
+				break;
+			case 7:
+				console.log(this.route);
 				this.done();
+				break;
 		}
 	};
 
-	Foursquare.prototype.getNext = function(ll, type) {
+	function getStrList(cat){
+		//returns serialized list seperated by commas
+		var str = "";
+		for (var i = 0; i < cat.length-1; i++){
+			str += (cat[i]+",");
+		}
+		str += cat[cat.length-1];
+		return str;
+	}
+
+	Foursquare.prototype.call4sq = function(ll, radius, type, action){
 		//takes tuple of latitue and longitude as input
 		//type -> B: Breakfast, N: Nightlife, T: Tourspots, F: Food other than breakfast
-		var self =  this;
 		var category;
+		var self =  this;
 		switch(type){
 			case 'T':
 				category = [MALL, MARKET, NEIGHBORHOOD, LANDMARKS, AQUARIUM, GALLERY, CASINO, HISTORIC, MUSEUM, STADIUM];
@@ -130,13 +165,21 @@ app.factory('Foursquare', function($rootScope) {
 
 		$.getJSON(url, function(data){
 			data = data.response.groups[0].items;
-			self.append(data);
+			if (data.length < 1)
+				this.done();
+			if (action == 'a')	
+				self.append(data);
+			else if (action == 'r')
+				self.replace(data);
 		})
 		.fail(function(error){
 			console.log("Foursquare search error: ", error);
-			self.append();
+			if (action == 'a')	
+				self.append(null);
+			else if (action == 'r')
+				self.replace(null);
 		});
-    };
+	};
 
     return new Foursquare();
 });
