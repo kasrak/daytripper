@@ -152,6 +152,17 @@ button:active {
 .screen-places.show {
   -webkit-transform: translateX(0);
 }
+.screen-places .controls-top {
+  float: right;
+  margin: 5px;
+}
+.screen-places .controls-top i {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.screen-places .controls-top i:hover {
+  color: #699e6b;
+}
 .screen-places h1 {
   color: #aaa;
   border-bottom: 1px solid #aaa;
@@ -184,6 +195,9 @@ button:active {
 }
 .screen-places ul li:nth-child(6) .marker {
   background: #1DA2AD;
+}
+.screen-places ul li:nth-child(7) .marker {
+  background: #42a777;
 }
 .screen-places ul li {
   padding: 10px;
@@ -247,7 +261,7 @@ button:active {
 }
 .screen-places ul li .controls span.control i {
   display: block;
-  margin-bottom: 29px;
+  margin-bottom: 15px;
 }
 .screen-places ul li .controls span.control:hover {
   color: #699e6b;
