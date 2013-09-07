@@ -106,5 +106,28 @@ app.factory('Map', function() {
         map.map.setZoom(zoom || 12);
     };
 
+    map.calcRoute = function(points) {
+       var start = points.shift();
+       var end = points.pop();
+       var waypts;
+       for (var i = 0; i < points.length(); i++) {
+           waypts.push({
+               location:points[i].value,
+               stopover:true});
+       }
+       var request = {
+           origin: start,
+           destination: end,
+           waypoints:waypts,
+           travelMode: google.maps.DirectionsTravelMode.WALKING;
+       };
+       directionService.route(request, function(response,status) {
+           if (status != google.maps.DirectionsStatus.OK) {
+               console.log('ERR Route', status);
+           } else {
+               directionsDisplay.setDirections(response);
+           }
+       };
+    }
     return map;
 });
