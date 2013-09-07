@@ -25,7 +25,7 @@ app.filter('addr_part', function() {
     };
 });
 
-app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places) {
+app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places, Foursquare) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
     $scope.currentAddress = null;
@@ -105,6 +105,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
         }, function(error) {
             console.log('Geolocation error', error);
         });
+
     });
 });
 
