@@ -70,7 +70,6 @@ button:active {
 .screen-plan-form {
   width: 500px;
   margin: 80px auto 0;
-  text-align: left;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 3px;
   text-align: center;
@@ -125,4 +124,105 @@ button:active {
   -ms-transition: width 400ms;
   transition: width 400ms;
   width: 5%;
+}
+/*
+ * Places screen
+ */
+.screen-places {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  color: #444;
+  width: 400px;
+  text-align: left;
+  -webkit-transform: translateZ(1px);
+  overflow: auto;
+  border-left: 1px solid #aaa;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
+  -webkit-transition: -webkit-transform 200ms;
+  -moz-transition: -moz-transform 200ms;
+  -o-transition: -o-transform 200ms;
+  -ms-transition: -ms-transform 200ms;
+  transition: transform 200ms;
+  -webkit-transform: translateX(-405px);
+}
+.screen-places.show {
+  -webkit-transform: translateX(0);
+}
+.screen-places h1 {
+  color: #aaa;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding: 10px;
+  font-size: 12pt;
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.screen-places ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.screen-places ul li:nth-child(1) .marker {
+  background: #74b422;
+}
+.screen-places ul li:nth-child(2) .marker {
+  background: #E66711;
+}
+.screen-places ul li:nth-child(3) .marker {
+  background: #E25353;
+}
+.screen-places ul li:nth-child(4) .marker {
+  background: #9761A2;
+}
+.screen-places ul li:nth-child(5) .marker {
+  background: #4967C7;
+}
+.screen-places ul li:nth-child(6) .marker {
+  background: #1DA2AD;
+}
+.screen-places ul li {
+  padding: 10px;
+  border-bottom: 1px solid #aaa;
+  clear: both;
+  cursor: pointer;
+}
+.screen-places ul li:hover {
+  background: #fff;
+}
+.screen-places ul li:active {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
+}
+.screen-places ul li .marker {
+  display: inline-block;
+  font-size: 10pt;
+  font-weight: 700;
+  padding: 5px;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  min-width: 20px;
+  height: 20px;
+  line-height: 1.6;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+  float: left;
+  margin: -3px 6px 10px 0;
+}
+.screen-places ul li .type {
+  text-transform: uppercase;
+  color: #888;
+  font-size: 10pt;
+  line-height: 1.6;
+  margin-left: 38px;
+}
+.screen-places ul li .address {
+  font-size: 12pt;
+  margin-left: 1px;
+  color: #555;
+}
+.screen-places ul li h2 {
+  margin: 0;
 }
