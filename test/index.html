@@ -16,11 +16,24 @@
 			$(document).ready(function(){
 				var CLIENT_ID = "HE5JMHFU0A4ZWQWYZPUTHH2JID4DBE2IJP5ICMVHJXCVNGZ2";
 				var CLIENT_SECRET = "2O4ZBJ1EWCCEYKTTPYBPEBI3N4YY4ZBSGD3M3X4STRPBUMPX";
-				var category = ["4bf58dd8d48988d1f1931735"];
+
+				var RESTAURANT = "4bf58dd8d48988d1c4941735";
+				var BREAKFAST = "4bf58dd8d48988d143941735";
+				var BAR = "4bf58dd8d48988d116941735";
+				var LANDMARKS = "4bf58dd8d48988d12d941735";
+				var AQUARIUM = "4fceea171983d5d06c3e9823";
+				var	GALLERY = "4bf58dd8d48988d1e2931735";
+				var CASINO = "4bf58dd8d48988d17c941735";
+				var ENTERTAINMENT = "4bf58dd8d48988d1f1931735";
+				var HISTORIC = "4deefb944765f83613cdba6e";
+				var MUSEUM = "4bf58dd8d48988d181941735";
+				var STADIUM = "4bf58dd8d48988d184941735";
+				var category = [LANDMARKS, AQUARIUM, GALLERY, CASINO, ENTERTAINMENT, HISTORIC, MUSEUM, STADIUM];
 				var ll = [43.65, -79.38]; 
 				var radius = 80000;
-				var url = "https://api.foursquare.com/v2/venues/search?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&categoryId="+getStrList(category)+"&ll="+getStrList(ll)+"&radius="+radius;
+				var url = "https://api.foursquare.com/v2/venues/search?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&categoryId="+getStrList(category)+"&ll="+getStrList(ll)+"&radius="+radius+"&intent=browse";
 				$.getJSON(url, function(data){
+					alert(url);
 					console.log(data);
 				});
 			});
