@@ -1,5 +1,4 @@
 app.factory('Foursquare', function($rootScope) {
-	
 	//App Credentials
 	var CLIENT_ID = "HE5JMHFU0A4ZWQWYZPUTHH2JID4DBE2IJP5ICMVHJXCVNGZ2";
 	var CLIENT_SECRET = "2O4ZBJ1EWCCEYKTTPYBPEBI3N4YY4ZBSGD3M3X4STRPBUMPX";
@@ -29,7 +28,7 @@ app.factory('Foursquare', function($rootScope) {
 		this.progress = null;
     };
 
-	
+
 
 	function getStrList(cat){
 		//returns serialized list seperated by commas
@@ -41,19 +40,19 @@ app.factory('Foursquare', function($rootScope) {
 		return str;
 	}
 
-	Foursquare.prototype.getRoute = function(ll, callback, progress){
+	Foursquare.prototype.getRoute = function(ll, done, progress){
 		this.getNext(ll, 'B');
 		this.done = done;
 		this.progress = progress;
 	}
-	
+
 	Foursquare.prototype.alreadyInRoute = function(venue){
 		if (this.route == null)
 			return false;
 		for (var i = 0; i < this.route.length; i++)
 			if (this.route[i].id == venue.id)
 				return true;
-		return false;	
+		return false;
 	};
 
 	Foursquare.prototype.getBest = function(venues){
@@ -64,18 +63,18 @@ app.factory('Foursquare', function($rootScope) {
 				scores.push(0);
 			else if (self.alreadyInRoute(venue))
 				scores.push(0);
-			else 
-				scores.push(venue.stats.checkinsCount/venue.location.distance);			
+			else
+				scores.push(venue.stats.checkinsCount/venue.location.distance);
 		});
-		
+
 		var temp = scores.slice(0);
-		temp.sort(function(a,b){return a-b});
+		temp.sort(function(a,b){return a-b;});
 		console.log(temp);
 		return scores.indexOf(temp[temp.length-Math.floor((Math.random()*10))-1]);
 	};
 
 	Foursquare.prototype.append = function(venues){
-		if (venues != null)
+		if (venues !== null)
 			this.route.push(venues[this.getBest(venues)]);
 
 		switch(this.route.length){
@@ -100,6 +99,7 @@ app.factory('Foursquare', function($rootScope) {
 				this.progress(5/6);
 				break;
 			case 6:
+                this.progress(1);
 				this.done();
 		}
 	};
@@ -125,7 +125,7 @@ app.factory('Foursquare', function($rootScope) {
 		}
 
 		var url = "https://api.foursquare.com/v2/venues/search?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&categoryId="+getStrList(category)+"&ll="+getStrList(ll)+"&radius="+radius+"&intent=browse";
-		
+
 		console.log(url);
 
 		$.getJSON(url, function(data){

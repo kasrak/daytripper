@@ -25,14 +25,12 @@ app.filter('addr_part', function() {
     };
 });
 
-app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places) {
+app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places, Progress) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
     $scope.currentAddress = null;
 
     $scope.loading = false;
-
-    var $progressBar;
 
     var shouldAutocomplete = true;
 
@@ -60,27 +58,19 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
     $scope.startPlanning = function() {
         $scope.loading = true;
 
+        Progress.reset();
         Places.load($scope.currentAddress.geometry.location.lat,
                    $scope.currentAddress.geometry.location.lng);
 
-        var progress = 5;
-        var incrementProgress = function() {
-            progress += 20;
-            $progressBar.css('width', progress + '%');
-            if (progress < 100) {
-                window.setTimeout(incrementProgress, 100);
-            } else {
-                window.setTimeout(function() {
-                    Places.show();
-                    $($element).hide();
-                }, 700);
-            }
+        Progress.onDone = function() {
+            window.setTimeout(function() {
+                Places.show();
+                $($element).hide();
+            }, 700);
         };
-        window.setTimeout(incrementProgress, 500);
     };
 
     $(function() {
-        $progressBar = $('.loading .progress');
 
         $('input.address').on('click', function() {
             this.select();

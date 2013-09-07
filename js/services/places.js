@@ -1,4 +1,4 @@
-app.factory('Places', function($rootScope, Foursquare) {
+app.factory('Places', function($rootScope, Foursquare, Progress) {
     var $places;
 
     $(function() {
@@ -12,11 +12,14 @@ app.factory('Places', function($rootScope, Foursquare) {
 
     Places.prototype.load = function(lat, lng) {
         var self = this;
-        Foursquare.getRoute([lat, lng], function() {
+        Foursquare.getRoute([lat, lng],
+        function() {
             $rootScope.$apply(function() {
                 self.list = Foursquare.route;
-                console.log(self.list);
             });
+        },
+        function(progress) {
+            Progress.set(progress);
         });
     };
 
