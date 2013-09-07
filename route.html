@@ -1,100 +1,91 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-		<meta charset="utf-8">
-		<link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
-		<style> 
-			#directions-panel {
-				height: 100%;
-				float: right;
-				width: 390px;
-				overflow: auto;
- 			}
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+        <style> 
+            #directions-panel {
+                height: 100%;
+                float: right;
+                width: 390px;
+                overflow: auto;
+            }
 
-			#map-canvas {
-				margin-right: 400px;
-			}
+            #map-canvas {
+                margin-right: 400px;
+            }
 
-			@media print {
-				#map-canvas {
-					height: 500px;
-					margin: 0;
-				}
+            @media print {
+                #map-canvas {
+                    height: 500px;
+                    margin: 0;
+                }
 
-				#directions-panel {
-					float: none;
-					width: auto;
-				}
-			}
-		</style>
-		<title>Directions service</title>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-		<script>
+                #directions-panel {
+                    float: none;
+                    width: auto;
+                }
+            }
+        </style>
+        <title>Directions service</title>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+        <script>
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 
 function initialize() {
-	directionsDisplay = new google.maps.DirectionsRenderer();
-	var toronto = new google.maps.LatLng(43.652527,-79.381961);
-	var mapOptions = {
-		zoom:7,
-		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		center: toronto
-	}
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	directionsDisplay.setMap(map);
-	directionsDisplay.setPanel(document.getElementById('directions-panel'));
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    var toronto = new google.maps.LatLng(43.652527,-79.381961);
+    var mapOptions = {
+        zoom:7,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        center: toronto
+    }
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('directions-panel'));
 }
 
-function calcRoute() {
-	var stepDisplay = new google.maps.InfoWindow ();
-	var hotel = "ritz-carlton, toronto";
-	var request = {
-			origin:hotel,
-			destination:hotel,
-			waypoints : [
-				{
-					location:"joe badali's, toronto",
-					stopover:true
-			//	},{
-			//		location:"rogers center, toronto",
-			//		stopover:true
-			//	},{
-			//		location:"joe badali's, toronto",
-			//		stopover:true
-			//	},{
-			//		location:"center island, toronto",
-			//		stopover:true
-			//	},{
-			//		location:"noir, toronto",
-			//		stopover:true
-				},{
-					location:"eaton center, toronto",
-					stopover:true
-				}],
-			travelMode: google.maps.DirectionsTravelMode.WALKING
-	};
-	directionsService.route(request, function(response, status) {
-		if (status == google.maps.DirectionsStatus.OK) {
-			directionsDisplay.setDirections(response);
-		}
-		else {
-			alert('Error was: ' + status);
-		}
-	});
+function calcRoute(pointa,pointb) {
+    var stepDisplay = new google.maps.InfoWindow ();
+    var hotel = "ritz-carlton, toronto";
+    var directions = [];
+    var points = [];
+    points.push(pointa);
+    points.push(pointb);
+    for (var i=0; i < points.length; i++) {
+        var destination = points[i];
+        var request = {
+            origin:hotel,
+            destination:destination,
+            travelMode:google.maps.DirectionsTravelMode.WALKING
+        };
+        directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directions[i] = new google.maps.DirectionsRenderer
+                    ({suppressMarkers:true});
+                directions[i].setMap(map);
+                directions[i].setDirections(response);
+            }
+            else {
+                alert('Error was: ' + status);
+            }
+        });
+    }
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
-		</script>
-	</head>
-	<body>
-		<div id="panel">
-		<button type="button" onClick="calcRoute();">Calculate route</button>
-		</div>
-		<div id="map-canvas"></div>
-		<div id="directions-panel"></div>
-	</body>
+        </script>
+    </head>
+    <body>
+        <div id="panel">
+            <button type="button" onClick="calcRoute('rogers center, toronto',
+                'center island, toronto');">Calculate route</button>
+        </div>
+        <div id="map-canvas"></div>
+        <div id="directions-panel"></div>
+    </body>
 </html>
