@@ -19,6 +19,53 @@ app.factory('Foursquare', function($rootScope) {
 	var MALL = "4bf58dd8d48988d1fd941735";
 	var MARKET = "4bf58dd8d48988d1fa941735";
 
+	//foood
+	var AMERICAN = "4bf58dd8d48988d14e941735";
+	var AREPA = "4bf58dd8d48988d152941735";
+	var ASIAN = "4bf58dd8d48988d142941735";
+	var BBQ = "4bf58dd8d48988d1df931735";
+	var BURGER = "4bf58dd8d48988d16c941735";
+	var CAFE = "4bf58dd8d48988d16d941735";
+	var CAJUN = "4bf58dd8d48988d17a941735";
+	var CARRIBEAN = "4bf58dd8d48988d144941735";
+	var CUBAN = "4bf58dd8d48988d154941735";
+	var DELI = "4bf58dd8d48988d146941735";
+	var DIMSUM = "4bf58dd8d48988d1f5931735";
+	var DINER = "4bf58dd8d48988d147941735";
+	var ETHIOPIA = "4bf58dd8d48988d10a941735";
+	var TRUCK = "4bf58dd8d48988d1cb941735";
+	var FRENCH = "4bf58dd8d48988d10c941735";
+	var GASTROPUB = "4bf58dd8d48988d155941735";
+	var GERMAN = "4bf58dd8d48988d10d941735";
+	var GREEK = "4bf58dd8d48988d10e941735";
+	var INDIAN = "4bf58dd8d48988d10f941735";
+	var ITALIAN = "4bf58dd8d48988d110941735";
+	var JAPANESE = "4bf58dd8d48988d111941735";
+	var KOREAN = "4bf58dd8d48988d113941735";
+	var MEDITERRANEAN = "4bf58dd8d48988d1c0941735";
+	var MEXICAN = "4bf58dd8d48988d1c1941735";
+	var MIDDLEEASTERN = "4bf58dd8d48988d115941735";
+	var MOLEGASTRO = "4bf58dd8d48988d1c2941735";
+	var PORTUGUESE = "4def73e84765ae376e57713a";
+	var RAMEN = "4bf58dd8d48988d1d1941735";
+	var SALAD = "4bf58dd8d48988d1bd941735";
+	var SANDWICH = "4bf58dd8d48988d1c5941735";
+	var SEAFOOD = "4bf58dd8d48988d1ce941735";
+	var SOUP = "4bf58dd8d48988d1dd931735";
+	var SOUTHAMERICAN = "4bf58dd8d48988d1cd941735";
+	var SOUTHERN = "4bf58dd8d48988d14f941735";
+	var SPANISH = "4bf58dd8d48988d150941735";
+	var STEAK = "4bf58dd8d48988d1cc941735";
+	var SUSHI = "4bf58dd8d48988d1d2941735";
+	var SWISS = "4bf58dd8d48988d158941735";
+	var TACO = "4bf58dd8d48988d151941735";
+	var THAI = "4bf58dd8d48988d149941735";
+	var VEGGIE = "4bf58dd8d48988d1d3941735";
+	var VIETNAMESE = "4bf58dd8d48988d14a941735";
+	var WINGS = "4bf58dd8d48988d14b941735";
+
+
+
 	//settings
 	var radius = 8000;
 
@@ -76,7 +123,7 @@ app.factory('Foursquare', function($rootScope) {
 		var self = this;
 		var scores = [];
 		_.each(venues, function(venue){
-			if (venue.categories[0].name === "Coffee Shop" || venue.categories[0].name==="Hotel" || venue.categories[0].name === "Office")
+			if (venue.categories[0].name === "Coffee Shop" || venue.categories[0].name==="Hotel" || venue.categories[0].name === "Office" || venue.categories[0].name === "Grocery Store")
 				scores.push(0);
 			else if (self.alreadyInRoute(venue))
 				scores.push(0);
@@ -86,7 +133,6 @@ app.factory('Foursquare', function($rootScope) {
 
 		var temp = scores.slice(0);
 		temp.sort(function(a,b){return a-b});
-		console.log(venues);
 		var picks;
 		if (venues.length >10)
 			picks = 10;
@@ -107,7 +153,7 @@ app.factory('Foursquare', function($rootScope) {
 				this.progress(1/6);
 				break;
 			case 2:
-				this.getNext([this.route[1].location.lat,this.route[1].location.lng], 'F');
+				this.getNext([this.route[1].location.lat,this.route[1].location.lng], 'L');
 				this.progress(2/6);
 				break;
 			case 3:
@@ -115,7 +161,7 @@ app.factory('Foursquare', function($rootScope) {
 				this.progress(3/6);
 				break;
 			case 4:
-				this.getNext([this.route[3].location.lat,this.route[3].location.lng], 'F');
+				this.getNext([this.route[3].location.lat,this.route[3].location.lng], 'D');
 				this.progress(4/6);
 				break;
 			case 5:
@@ -153,13 +199,16 @@ app.factory('Foursquare', function($rootScope) {
 				category = [MALL, MARKET, NEIGHBORHOOD, LANDMARKS, AQUARIUM, GALLERY, CASINO, HISTORIC, MUSEUM];
 				break;
 			case 'B':
-				category = [BREAKFAST];
+				category = [BREAKFAST, CAFE, DIMSUM];
 				break;
 			case 'N':
 				category = [BAR];
 				break;
-			case 'F':
-				category = [RESTAURANT];
+			case 'L':
+				category = [SANDWICH, SEAFOOD, TACO, VEGGIE, WINGS, TRUCK, DINER, DELI, BURGER, BBQ, DIMSUM, RAMEN, SUSHI, CAFE];
+				break;
+			case 'D':
+				category = [AMERICAN, AREPA, ASIAN, BBQ, BURGER, CAJUN, CARRIBEAN, CUBAN, ETHIOPIA, FRENCH, GASTROPUB, GERMAN, GREEK, INDIAN, ITALIAN, JAPANESE, KOREAN, MEDITERRANEAN, MEXICAN, MIDDLEEASTERN, MOLEGASTRO, PORTUGUESE, RAMEN, SEAFOOD, SOUTHAMERICAN, SOUTHERN, SPANISH, STEAK, SUSHI, SWISS, THAI, VIETNAMESE, WINGS];
 				break;
 		}
 
@@ -169,7 +218,7 @@ app.factory('Foursquare', function($rootScope) {
 
 		$.getJSON(url, function(data){
 			data = data.response.groups[0].items;
-			if (data == null)
+			if (data.length <1)
 				this.done();
 			if (action == 'a')	
 				self.append(data);
