@@ -107,6 +107,21 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
 
 app.controller('PlacesController', function($scope, Places) {
     $scope.places = Places;
+
+    $scope.resetPlaces = function() {
+    };
+
+    $scope.refreshPlaces = function() {
+    };
+
+    $scope.removePlace = function(place) {
+    };
+
+    $scope.placeInfo = function(place) {
+    };
+
+    $scope.placeMap = function(place) {
+    };
 });
 
 if (typeof String.prototype.startsWith != 'function') {

@@ -54,8 +54,8 @@
 
         <div class="screen-places" ng-controller="PlacesController">
             <div class="controls-top">
-                <i class="icon-reply"></i>
-                <i class="icon-refresh"></i>
+                <i class="icon-reply" ng-click="resetPlaces()"></i>
+                <i class="icon-refresh" ng-click="refreshPlaces()"></i>
             </div>
             <h1>Places</h1>
             <ul>
@@ -69,13 +69,13 @@
 
                     <div class="controls">
                         <span class="control">
-                            <i class="icon-remove"></i>
+                            <i class="icon-remove" ng-click="removePlace(place)"></i>
                         </span>
                         <span class="control">
-                            <i class="icon-info"></i>
+                            <i class="icon-info" ng-click="placeInfo(place)"></i>
                         </span>
                         <span class="control">
-                            <i class="icon-map-marker"></i>
+                            <i class="icon-map-marker" ng-click="placeMap(place)"></i>
                         </span>
                     </div>
                 </li>
