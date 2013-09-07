@@ -139,5 +139,17 @@ app.factory('Map', function(Matrix) {
             });
         }
     };
+
+    map.marker = function(lat,lon,label) {
+            var bounds = map.map.getBounds ();
+            var position = new google.maps.LatLng(lat,lon);
+            var marker = new google.maps.Marker ({
+                position: position,
+                map: map.map,
+                icon: "http://frobeo.com/img/pin" + label + ".png"
+            });
+            bounds.extend(position);
+            map.map.fitBounds(bounds);
+        }
     return map;
 });
