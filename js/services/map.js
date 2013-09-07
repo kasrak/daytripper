@@ -1,4 +1,4 @@
-app.factory('Map', function() {
+app.factory('Map', function(Matrix) {
     var map = {};
     var $mapbox;
     var styles = [
@@ -112,27 +112,32 @@ app.factory('Map', function() {
     };
 
     map.calcRoute = function(points) {
-       var start = points.shift();
-       var end = points.pop();
-       var waypts;
-       for (var i = 0; i < points.length(); i++) {
-           waypts.push({
-               location:points[i].value,
-               stopover:true});
-       }
-       var request = {
-           origin: start,
-           destination: end,
-           waypoints:waypts,
-           travelMode: google.maps.DirectionsTravelMode.WALKING
-       };
-       directionService.route(request, function(response,status) {
-           if (status != google.maps.DirectionsStatus.OK) {
-               console.log('ERR Route', status);
-           } else {
-               directionsDisplay.setDirections(response);
-           }
-       });
+        var directionsService = new google.maps.DirectionsRenderer();
+        var directions = [];
+        for (var i=0; i < (points.length-1); i++) {
+            var origin = points[i];
+            var destination = points[(i+1)];
+            var request = {
+                origin: origin,
+                destination: destination,
+                travelMode: google.maps.DirectionsTravelMode.WALKING
+            };
+            Matrix.run([origin],[destination],function(response,status) {
+                if (response.rows[0].elements.distance.value > 1000) {
+                    request[travelMode] = google.maps.DirectionsTravelMode.DRIVING;
+                }
+            });
+            directionsService.route(request, function(response,status) {
+                if (status != google.maps.DirectionsStatus.OK) {
+                    console.log('ERR Route', status);
+                } else {
+                    directions[i] = new google.maps.DirectionsRenderer
+                        ({suppressMarkers:true});
+                    directions[i].setMap(map.map);
+                    directions[i].setDirections(response);
+                }
+            });
+        }
     };
     return map;
 });

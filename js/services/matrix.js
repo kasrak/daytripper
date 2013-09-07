@@ -21,7 +21,5 @@ app.factory('Matrix', function() {
             });
     };
 
-    Matrix.prototype.
-
     return new Matrix();
 });
