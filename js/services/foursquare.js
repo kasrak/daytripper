@@ -25,7 +25,8 @@ app.factory('Foursquare', function($rootScope) {
 
     var Foursquare = function() {
 		this.route=[];
-		this.callback = null;
+		this.done = null;
+		this.progress = null;
     };
 
 	
@@ -40,9 +41,10 @@ app.factory('Foursquare', function($rootScope) {
 		return str;
 	}
 
-	Foursquare.prototype.getRoute = function(ll, callback){
+	Foursquare.prototype.getRoute = function(ll, callback, progress){
 		this.getNext(ll, 'B');
-		this.callback = callback;
+		this.done = done;
+		this.progress = progress;
 	}
 	
 	Foursquare.prototype.alreadyInRoute = function(venue){
@@ -58,7 +60,7 @@ app.factory('Foursquare', function($rootScope) {
 		var self = this;
 		var scores = [];
 		_.each(venues, function(venue){
-			if (venue.categories[0].name === "Coffee Shop")
+			if (venue.categories[0].name === "Coffee Shop" || venue.categories[0].name==="Hotel")
 				scores.push(0);
 			else if (self.alreadyInRoute(venue))
 				scores.push(0);
@@ -73,26 +75,32 @@ app.factory('Foursquare', function($rootScope) {
 	};
 
 	Foursquare.prototype.append = function(venues){
-		this.route.push(venues[this.getBest(venues)]);
+		if (venues != null)
+			this.route.push(venues[this.getBest(venues)]);
 
 		switch(this.route.length){
 			case 1:
 				this.getNext([this.route[0].location.lat,this.route[0].location.lng], 'T');
+				this.progress(1/6);
 				break;
 			case 2:
 				this.getNext([this.route[1].location.lat,this.route[1].location.lng], 'F');
+				this.progress(2/6);
 				break;
 			case 3:
 				this.getNext([this.route[2].location.lat,this.route[2].location.lng], 'T');
+				this.progress(3/6);
 				break;
 			case 4:
 				this.getNext([this.route[3].location.lat,this.route[3].location.lng], 'F');
+				this.progress(4/6);
 				break;
 			case 5:
 				this.getNext([this.route[4].location.lat,this.route[4].location.lng], 'T');
+				this.progress(5/6);
 				break;
 			case 6:
-				this.callback();
+				this.done();
 		}
 	};
 
@@ -126,6 +134,7 @@ app.factory('Foursquare', function($rootScope) {
 		})
 		.fail(function(error){
 			console.log("Foursquare search error: ", error);
+			self.append();
 		});
     };
 
