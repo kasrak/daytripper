@@ -1,3 +1,11 @@
+"use strict";
+/*global window: false */
+/*global angular: false */
+/*global app: false */
+/*global $: false */
+/*global console: false */
+/*jshint globalstrict: true */
+
 window.app = angular.module('app', []);
 
 app.filter('addr_part', function() {
@@ -17,7 +25,7 @@ app.filter('addr_part', function() {
     };
 });
 
-app.controller('PlanForm', function($scope, Addresses, Map) {
+app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
     $scope.currentAddress = null;
@@ -50,10 +58,15 @@ app.controller('PlanForm', function($scope, Addresses, Map) {
 
         var progress = 5;
         var incrementProgress = function() {
-            progress += 10;
+            progress += 20;
             $progressBar.css('width', progress + '%');
             if (progress < 100) {
-                window.setTimeout(incrementProgress, 500);
+                window.setTimeout(incrementProgress, 100);
+            } else {
+                window.setTimeout(function() {
+                    Places.show();
+                    $($element).hide();
+                }, 700);
             }
         };
         window.setTimeout(incrementProgress, 500);
@@ -93,6 +106,10 @@ app.controller('PlanForm', function($scope, Addresses, Map) {
             console.log('Geolocation error', error);
         });
     });
+});
+
+app.controller('PlacesController', function($scope) {
+
 });
 
 if (typeof String.prototype.startsWith != 'function') {
