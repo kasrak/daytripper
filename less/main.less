@@ -1,0 +1,52 @@
+@import "lesshat.less";
+
+/*
+ * General styles
+ */
+
+body {
+    background: #222;
+    color: #eee;
+    font: 14pt/18pt 'Droid Sans', Arial, sans-serif;
+    font-weight: 400;
+    text-align: center;
+}
+
+h1 {
+    font-weight: 300;
+    font-size: 36pt;
+    line-height: 48pt;
+}
+
+input, button {
+    font: inherit;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    padding: 5px;
+    background: #eee;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+button {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: #eee;
+    .gradient(~"linear-gradient(top, #66a33a 0%, #44873f 93%, #317735 100%)");
+    border-color: rgb(43, 92, 43);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+input:focus {
+    outline: none;
+    background: #fff;
+}
+
+/*
+ * Plan form screen
+ */
+
+.screen-plan-form .city {
+    width: 380px;
+}
