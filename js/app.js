@@ -25,7 +25,7 @@ app.filter('addr_part', function() {
     };
 });
 
-app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places, Foursquare) {
+app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
     $scope.currentAddress = null;
@@ -55,6 +55,9 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
 
     $scope.startPlanning = function() {
         $scope.loading = true;
+
+        Places.load($scope.currentAddress.geometry.location.lat,
+                   $scope.currentAddress.geometry.location.lng);
 
         var progress = 5;
         var incrementProgress = function() {
@@ -105,12 +108,11 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
         }, function(error) {
             console.log('Geolocation error', error);
         });
-
     });
 });
 
-app.controller('PlacesController', function($scope) {
-
+app.controller('PlacesController', function($scope, Places) {
+    $scope.places = Places;
 });
 
 if (typeof String.prototype.startsWith != 'function') {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Trip plannr</title>
+        <title>Daytripper</title>
 
         <script src="/js/lib/lodash.min.js"></script>
         <script src="/js/lib/jquery.min.js"></script>
@@ -52,53 +52,13 @@
         <div class="screen-places" ng-controller="PlacesController">
             <h1>Places</h1>
             <ul>
-                <li>
-                    <span class="type">Breakfast</span>
+                <li ng-repeat="place in places.list">
+                    <span class="type">{{ place.categories[0].name }}</span>
                     <h2>
-                        <span class="marker">1</span>
-                        Patty's Eggs
+                        <span class="marker">{{ ($index + 1) }}</span>
+                        {{ place.name }}
                     </h2>
-                    <span class="address">123 Sesame St</span>
-                </li>
-                <li>
-                    <span class="type">Museum</span>
-                    <h2>
-                        <span class="marker">2</span>
-                        ROM
-                    </h2>
-                    <span class="address">8000 University Ave</span>
-                </li>
-                <li>
-                    <span class="type">LUNCH</span>
-                    <h2>
-                        <span class="marker">3</span>
-                        Burger King
-                    </h2>
-                    <span class="address">23 Fat St</span>
-                </li>
-                <li>
-                    <span class="type">LUNCH</span>
-                    <h2>
-                        <span class="marker">3</span>
-                        Burger King
-                    </h2>
-                    <span class="address">23 Fat St</span>
-                </li>
-                <li>
-                    <span class="type">LUNCH</span>
-                    <h2>
-                        <span class="marker">3</span>
-                        Burger King
-                    </h2>
-                    <span class="address">23 Fat St</span>
-                </li>
-                <li>
-                    <span class="type">LUNCH</span>
-                    <h2>
-                        <span class="marker">3</span>
-                        Burger King
-                    </h2>
-                    <span class="address">23 Fat St</span>
+                    <span class="address">{{ place.location.address }}</span>
                 </li>
             </ul>
         </div>
