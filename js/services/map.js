@@ -202,6 +202,17 @@ app.factory('Map', function($rootScope, Matrix, Places) {
             map: map.map,
             icon: '/img/pinh.png'
         });
+        google.maps.event.addListener(marker, 'click', function() {
+            console.log(Places.hotel);
+            $rootScope.$apply(function() {
+                angular.element($('.screen-places')[0]).scope().placeInfo({
+                    name: 'Hotel',
+                    location: {
+                        address: Places.hotel.formatted_address
+                    }
+                }, -1);
+            });
+        });
 
         _.each(newVal, function(place, i) {
             var position = new google.maps.LatLng(place.location.lat, place.location.lng);

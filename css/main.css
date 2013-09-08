@@ -229,40 +229,22 @@ button:active {
   float: left;
 }
 .screen-places .col2 .directions,
-.screen-places .col2 .directions-chooser {
+.screen-places .col2 .directions-header {
   clear: both;
-  padding: 10px;
+  padding: 10px 10px 0 10px;
 }
-.screen-places .col2 .directions-chooser a {
-  display: inline-block;
-  border: 1px solid #bbb;
-  width: 122px;
-  padding: 4px;
-  float: left;
-  border-radius: 4px;
-  cursor: pointer;
-  background: #fafafa;
+.screen-places .col2 .directions {
+  padding-top: 5px;
 }
-.screen-places .col2 .directions-chooser a.selected {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-  background: #f0f0f0;
-}
-.screen-places .col2 .directions-chooser a:first-child {
-  border-right: 0;
-  border-radius: 4px 0 0 4px;
-}
-.screen-places .col2 .directions-chooser a:last-child {
-  border-radius: 0 4px 4px 0;
-}
-.screen-places .col2 .directions-chooser a small {
+.screen-places .col2 .directions-header small {
   display: block;
+  color: #666;
 }
-.screen-places .col2 .directions-chooser a span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  width: 120px;
+.screen-places .col2 .directions-header a {
+  cursor: pointer;
+}
+.screen-places .col2 .directions-header a:hover {
+  text-decoration: underline;
 }
 .screen-places .controls-top {
   float: right;
@@ -294,6 +276,11 @@ button:active {
 }
 .screen-places h1 i {
   font-size: 8pt;
+}
+.screen-places .marker.hotel {
+  background: #fff;
+  color: #111 !important;
+  text-shadow: none !important;
 }
 .screen-places li:nth-child(1) .marker,
 .screen-places .marker.idx1 {

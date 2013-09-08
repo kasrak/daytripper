@@ -152,16 +152,6 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
         Places.replace(idx, type);
     };
 
-    $scope.directions = 'to';
-    $scope.$watch('directions', function(newVal, oldVal) {
-        if (newVal == oldVal) return;
-
-        if (newVal == 'to') {
-            Map.highlight($scope.selectedPlaceNumber);
-        } else { // from
-            Map.highlight($scope.selectedPlaceNumber - 1);
-        }
-    });
     $scope.selectedPlace = null;
     $scope.selectedPlaceInfo = null;
     $scope.selectedPlaceNumber = 0;
@@ -173,11 +163,7 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
             return;
         }
 
-        if ($scope.directions == 'to') {
-            Map.highlight($scope.selectedPlaceNumber);
-        } else { // from
-            Map.highlight($scope.selectedPlaceNumber - 1);
-        }
+        Map.highlight($scope.selectedPlaceNumber);
 
         Foursquare.getInfo(newVal.id, function(info, cached) {
             var fn = function() {
@@ -199,9 +185,13 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
         };
         $scope.selectedPlace = place;
         $scope.selectedPlaceNext = Places.list[idx + 1] || hotel;
-        $scope.selectedPlacePrev = Places.list[idx - 1] || hotel;
         $scope.selectedPlaceNumber = idx + 1;
         Map.highlight(idx);
+    };
+
+    $scope.nextPlace = function() {
+        $scope.placeInfo($scope.selectedPlaceNext,
+                         $scope.selectedPlaceNumber == 7 ? -1 : $scope.selectedPlaceNumber);
     };
 });
 
