@@ -65,10 +65,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	var WINGS = "4bf58dd8d48988d14b941735";
 
 
-
-	//settings
-	var radius = 8000;
-
     var Foursquare = function() {
 		this.route=[];
 		this.done = null;
@@ -87,7 +83,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 
 	Foursquare.prototype.getMiddleVenue = function(ll1, ll2, type){
 		var ll = [(ll1[0]+ll2[0])/2, (ll1[1]+ll2[1])/2];
-		var radius = 1000; 
+		var radius = 500; 
 
 		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
@@ -101,7 +97,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	Foursquare.prototype.replaceVenue = function(index, type, foundcb){
 		this.foundcb = foundcb;
 		this.index = index;
-		var radius = 1000;
+		var radius = 500;
 		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
 		Matrix.run([pointa], [pointb], function(response, status){
@@ -111,6 +107,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	};
 
 	Foursquare.prototype.getNext = function(ll, type) {
+		var radius = 8000;
 		this.call4sq(ll, radius, type, 'a');
     };
 
