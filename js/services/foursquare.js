@@ -70,6 +70,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
+    this.getTips("4a723a9ff964a520a8da1fe3", null);
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -253,7 +254,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		console.log(url);
 
 		$.getJSON(url, function(data){
-			data = data.response.groups[0].items;
+			var data = data.response.groups[0].items;
 			if (data.length <1){
 				self.done();
 				self.progress(1);
@@ -271,6 +272,21 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 				self.replace(null);
 		});
 	};
+
+  Foursquare.prototype.getTips = function(venueId, tipscb){
+		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
+
+    console.log(url);
+    
+		$.getJSON(url, function(data){
+			var data = data.response.groups[0].items;
+      var status = "success";
+		})
+		.fail(function(error){
+			console.log("Foursquare api error: ", error);
+      var status = "failed";
+		});
+  };
 
     return new Foursquare();
 });
