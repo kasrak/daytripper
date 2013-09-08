@@ -107,15 +107,15 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	};
 
 	Foursquare.prototype.getNext = function(ll, type) {
-		var radius = 8000;
+		var radius = 10000;
     if (this.route.length > 0){
       var prev;
       if (this.route.length == 1)
         prev = this.ll;
       else
         prev = [this.route[0].location.lat, this.route[0].location.lng];
-      ll[0] = ll[0] + 0.5*(ll[0] - prev[0]);
-      ll[1] = ll[1] + 0.5*(ll[1] - prev[1]);
+      ll[0] = ll[0] + (Math.random()-0.5)*(ll[0] - prev[0]);
+      ll[1] = ll[1] + (Math.random()-0.5)*(ll[1] - prev[1]);
     }
 		this.call4sq(ll, radius, type, 'a');
     };
