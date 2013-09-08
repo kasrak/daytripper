@@ -18,39 +18,51 @@ app.factory('Places', function($rootScope, Foursquare, Progress) {
         this.hotel = null;
     };
 
+    Places.prototype.replace = function(idx, type) {
+        var self = this;
+        Foursquare.replaceVenue(idx, type, function() {
+            self.update();
+        });
+    };
+
+    Places.prototype.update = function() {
+        var self = this;
+        $rootScope.$apply(function() {
+            self.list = Foursquare.route;
+
+            var breakfast = self.list[0],
+                lunch = self.list[2],
+                dinner = self.list[4],
+                category;
+
+            if (breakfast) {
+                category = breakfast.categories[0];
+                if (category.name.toLowerCase().indexOf("breakfast") == -1) {
+                    category.name = "Breakfast: " + category.name;
+                }
+            }
+
+            if (lunch) {
+                category = lunch.categories[0];
+                if (category.name.toLowerCase().indexOf("lunch") == -1) {
+                    category.name = "Lunch: " + category.name;
+                }
+            }
+
+            if (dinner) {
+                category = dinner.categories[0];
+                if (category.name.toLowerCase().indexOf("dinner") == -1) {
+                    category.name = "Dinner: " + category.name;
+                }
+            }
+        });
+    };
+
     Places.prototype.load = function(lat, lng) {
         var self = this;
         Foursquare.getRoute([lat, lng],
         function() {
-            $rootScope.$apply(function() {
-                self.list = Foursquare.route;
-
-                var breakfast = self.list[0],
-                    lunch = self.list[2],
-                    dinner = self.list[4],
-                    category;
-
-                if (breakfast) {
-                    category = breakfast.categories[0];
-                    if (category.name.toLowerCase().indexOf("breakfast") == -1) {
-                        category.name = "Breakfast: " + category.name;
-                    }
-                }
-
-                if (lunch) {
-                    category = lunch.categories[0];
-                    if (category.name.toLowerCase().indexOf("lunch") == -1) {
-                        category.name = "Lunch: " + category.name;
-                    }
-                }
-
-                if (dinner) {
-                    category = dinner.categories[0];
-                    if (category.name.toLowerCase().indexOf("dinner") == -1) {
-                        category.name = "Dinner: " + category.name;
-                    }
-                }
-            });
+            self.update();
         },
         function(progress) {
             Progress.set(progress);
