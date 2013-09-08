@@ -112,7 +112,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     };
 
     map.calcRoute = function(points) {
-        var directionsService = new google.maps.DirectionsRenderer();
+        var directionsService = new google.maps.DirectionsService();
         var directions = [];
         for (var i=0; i < (points.length-1); i++) {
             var origin = points[i];
@@ -124,19 +124,19 @@ app.factory('Map', function($rootScope, Matrix, Places) {
             };
             Matrix.run([origin],[destination],function(response,status) {
                 if (response.rows[0].elements[0].distance.value > 1000) {
-                    request[travelMode] = google.maps.DirectionsTravelMode.DRIVING;
+                    request["travelMode"] = google.maps.DirectionsTravelMode.DRIVING;
                 }
-            });
-            directionsService.route(request, function(response,status) {
-                if (status != google.maps.DirectionsStatus.OK) {
-                    console.log('ERR Route', status);
-                } else {
-                    directions[i] = new google.maps.DirectionsRenderer
-                        ({suppressMarkers:true});
-                    directions[i].setMap(map.map);
-                    directions[i].setDirections(response);
-                }
-            });
+                directionsService.route(request, function(response,status) {
+                    if (status != google.maps.DirectionsStatus.OK) {
+                        console.log('ERR Route', status);
+                    } else {
+                        directions[i] = new google.maps.DirectionsRenderer
+                            ({suppressMarkers:true});
+                        directions[i].setMap(map.map);
+                        directions[i].setDirections(response);
+                    }
+                });
+            });debugger;
         }
     };
 
@@ -147,17 +147,21 @@ app.factory('Map', function($rootScope, Matrix, Places) {
 
         var bounds = new google.maps.LatLngBounds();
 
-        var position = new google.maps.LatLng(Places.hotel.geometry.location.lat,
+        var hposition = new google.maps.LatLng(Places.hotel.geometry.location.lat,
                                               Places.hotel.geometry.location.lng);
+        var points = [];
+        points.push(hposition);
+
         new google.maps.Marker({
-            position: position,
+            position: hposition,
             map: map.map,
             icon: '/img/pinh.png'
         });
-        bounds.extend(position);
+        bounds.extend(hposition);
 
         var markers = _.map(newVal, function(place, i) {
             var position = new google.maps.LatLng(place.location.lat, place.location.lng);
+            points.push(position);
             new google.maps.Marker({
                 position: position,
                 map: map.map,
@@ -165,7 +169,8 @@ app.factory('Map', function($rootScope, Matrix, Places) {
             });
             bounds.extend(position);
         });
-
+        points.push(hposition);
+        map.calcRoute(points);
         map.map.fitBounds(bounds);
     });
     return map;
