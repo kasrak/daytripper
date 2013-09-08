@@ -113,18 +113,19 @@ app.controller('PlacesController', function($scope, Places) {
     $scope.places = Places;
 
     $scope.resetPlaces = function() {
+        console.log('reset');
     };
 
     $scope.refreshPlaces = function() {
+        console.log('refresh');
     };
 
     $scope.removePlace = function(place) {
+        console.log('remove', place);
     };
 
     $scope.placeInfo = function(place) {
-    };
-
-    $scope.placeMap = function(place) {
+        console.log('info', place);
     };
 });
 

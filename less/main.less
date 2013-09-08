@@ -205,11 +205,18 @@ button {
         li:nth-child(7) .marker { background: #42a777; }
 
         li {
-            padding: 10px;
             border-bottom: 1px solid #aaa;
             clear: both;
-            cursor: pointer;
             position: relative;
+
+            div.info {
+                padding: 10px;
+                cursor: pointer;
+
+                &:active {
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
+                }
+            }
 
             &:hover {
                 background: #fff;
@@ -217,10 +224,6 @@ button {
                 .controls {
                     display: block;
                 }
-            }
-
-            &:active {
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
             }
 
             .marker {
@@ -262,14 +265,14 @@ button {
                 right: 0;
                 top: 0;
                 bottom: 0;
-                background: #ddd;
                 width: 20px;
                 text-align: center;
                 display: none;
-                box-shadow: 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+                color: #999;
 
                 span.control {
                     display: block;
+                    cursor: pointer;
 
                     i {
                         display: block;
@@ -278,6 +281,10 @@ button {
 
                     &:hover {
                         color: rgb(105, 158, 107);
+                    }
+
+                    &:hover .icon-remove {
+                        color: rgb(245, 103, 84);
                     }
                 }
             }
