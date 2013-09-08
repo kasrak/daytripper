@@ -152,7 +152,10 @@ app.controller('PlacesController', function($scope, Places, Map) {
         Places.replace(idx, type);
     };
 
+    $scope.selectedPlace = null;
+
     $scope.placeInfo = function(place, idx) {
+        $scope.selectedPlace = place;
         console.log('info', place);
         Map.highlight(idx);
     };

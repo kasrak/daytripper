@@ -70,7 +70,8 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
-	//	this.getLinks("3fd66200f964a5209df11ee3", null);
+		
+		//this.getInfo("3fd66200f964a5209df11ee3", null);
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -293,53 +294,60 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		});
 	};
 
-  Foursquare.prototype.getTips = function(venueId, tipscb){
-		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
+  Foursquare.prototype.getInfo = function(venueId, infocb){
 
-    console.log(url);
+    var jxhr = []; 
+	var info = {tips:null, photos:null, links:null};
+	
+	this.getTips(venueId, jxhr, info);
+	this.getPhotos(venueId, jxhr, info);
+	this.getLinks(venueId, jxhr, info);
 
+    $.when.apply($, jxhr).done(function(){
+		infocb(info);
+    }); 
+  };    
+
+  Foursquare.prototype.getTips = function(venueId, jxhr, info){
+	var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
+
+	jxhr.push(
 		$.getJSON(url, function(data){
-      		var status = "success";
-			tipscb(data, status);	
+			info.tips = data.response.tips.items;
 		})
 		.fail(function(error){
 			console.log("Foursquare api error: ", error);
-            var status = "failed";
-			tipscb(error, status);
-		});
+			info.tips = error;
+		})
+	);
   };
 
-  Foursquare.prototype.getPhotos = function(venueId, photoscb){
+  Foursquare.prototype.getPhotos = function(venueId, jxhr, info){
 		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/photos?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
 
-    	console.log(url);
-    
+   jxhr.push( 
 		$.getJSON(url, function(data){
-      		var status = "success";
-			photoscb(data, status);	
+			info.photos = data.response.photos.groups[1].items;
 		})
 		.fail(function(error){
 			console.log("Foursquare api error: ", error);
-      		var status = "failed";
-			photoscb(error, status);	
-		});
+			info.photo = error;
+		})
+	);
   };
 
-  Foursquare.prototype.getLinks = function(venueId, linkscb){
+  Foursquare.prototype.getLinks = function(venueId, jxhr, info){
 		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/links?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
 
-    	console.log(url);
-    
+	jxhr.push(
 		$.getJSON(url, function(data){
-			console.log(data);
-      		var status = "success";
-			linkscb(data, status);	
+			info.links = data.response.links.items;
 		})
 		.fail(function(error){
 			console.log("Foursquare api error: ", error);
-      		var status = "failed";
-			linkscb(error, status);	
-		});
+			info.links = error;
+		})
+	);
   };
 
     return new Foursquare();
