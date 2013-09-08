@@ -148,13 +148,22 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         _.each(routes, function(leg,i) {
             if (route == route_ind[i]) {
                 leg.setMap(map.map);
-                console.log('here',leg);
                 map.map.fitBounds(leg.directions.routes[0].bounds);
                 map.map.setZoom(map.map.getZoom()-1);
             } else {
                 leg.setMap(null);
             }
         });
+    };
+
+    map.unhighlight = function() {
+        var bounds = new google.maps.LatLngBounds();
+        _.each(routes,function(leg) {
+            leg.setMap(map.map);
+            bounds.union(leg.directions.routes[0].bounds);
+        });
+        map.map.fitBounds(bounds);
+        map.map.setZoom(map.map.getZoom()-1);
     };
 
     var markers = [];
