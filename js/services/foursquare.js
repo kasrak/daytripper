@@ -304,7 +304,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	this.getLinks(venueId, jxhr, info);
 
     $.when.apply($, jxhr).done(function(){
-		console.log(info);
+		infocb(info);
     }); 
   };    
 
