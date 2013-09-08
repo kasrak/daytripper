@@ -33,6 +33,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
     $scope.places = Places;
 
     $scope.reset = function() {
+        Map.shouldUpdateBounds = true;
         Places.hide();
         Places.clear();
         $scope.addresses.clear();
