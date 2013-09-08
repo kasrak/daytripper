@@ -111,9 +111,9 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         map.map.setZoom(zoom || 12);
     };
 
+    var routes = [];
     map.calcRoute = function(points) {
         var directionsService = new google.maps.DirectionsService();
-        var directions = [];
         for (var i=0; i < (points.length-1); i++) {
             (function(origin, destination) {
                 Matrix.run([origin],[destination],function(response,status) {
@@ -130,43 +130,59 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                         if (status != google.maps.DirectionsStatus.OK) {
                             console.log('ERR Route', status);
                         } else {
-                            directions[i] = new google.maps.DirectionsRenderer({suppressMarkers:true});
-                            directions[i].setMap(map.map);
-                            directions[i].setDirections(response);
+                            var renderer = new google.maps.DirectionsRenderer({suppressMarkers:true});
+                            renderer.setMap(map.map);
+                            renderer.setDirections(response);
+                            routes.push(renderer);
                         }
                     });
                 });
             })(points[i], points[i+1]);
         }
-    }
+    };
 
+    var markers = [];
     $rootScope.$watch(function() {
         return Places.list;
     }, function(newVal, oldVal) {
         if (newVal == oldVal) return;
 
+        _.each(markers, function(marker) {
+            marker.setMap(null);
+        });
+        markers.length = 0;
+
+        _.each(routes, function(route) {
+            route.setMap(null);
+        });
+        routes.length = 0;
+
         var bounds = new google.maps.LatLngBounds();
+
+        if (!Places.hotel) {
+            return;
+        }
 
         var hposition = new google.maps.LatLng(Places.hotel.geometry.location.lat,
                                               Places.hotel.geometry.location.lng);
         var points = [];
         points.push(hposition);
 
-        new google.maps.Marker({
+        markers.push(new google.maps.Marker({
             position: hposition,
             map: map.map,
             icon: '/img/pinh.png'
-        });
+        }));
         bounds.extend(hposition);
 
-        var markers = _.map(newVal, function(place, i) {
+        _.each(newVal, function(place, i) {
             var position = new google.maps.LatLng(place.location.lat, place.location.lng);
             points.push(position);
-            new google.maps.Marker({
+            markers.push(new google.maps.Marker({
                 position: position,
                 map: map.map,
                 icon: '/img/pin' + (i + 1) + '.png'
-            });
+            }));
             bounds.extend(position);
         });
         points.push(hposition);

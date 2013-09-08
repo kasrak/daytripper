@@ -13,6 +13,11 @@ app.factory('Places', function($rootScope, Foursquare, Progress) {
         this.hotel = null;
     };
 
+    Places.prototype.clear = function() {
+        this.list = [];
+        this.hotel = null;
+    };
+
     Places.prototype.load = function(lat, lng) {
         var self = this;
         Foursquare.getRoute([lat, lng],
