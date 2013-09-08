@@ -155,7 +155,12 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
     $scope.selectedPlace = null;
     $scope.selectedPlaceInfo = null;
     $scope.$watch('selectedPlace', function(newVal, oldVal) {
-        if (newVal == oldVal || !newVal) return;
+        if (newVal == oldVal) return;
+
+        if (!newVal) {
+            Map.unhighlight();
+            return;
+        }
 
         Foursquare.getInfo(newVal.id, function(info) {
             $scope.$apply(function() {
