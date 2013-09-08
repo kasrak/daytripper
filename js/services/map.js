@@ -111,7 +111,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         map.map.setZoom(zoom || 12);
     };
 
-    map.calcRoute = function(points) {
+    map.calcRoute = function(points,bounds) {
         var directionsService = new google.maps.DirectionsService();
         var directions = [];
         for (var i=0; i < (points.length-1); i++) {
@@ -130,7 +130,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                         if (status != google.maps.DirectionsStatus.OK) {
                             console.log('ERR Route', status);
                         } else {
-                            directions[i] = new google.maps.DirectionsRenderer({suppressMarkers:true});
+                            directions[i] = new google.maps.DirectionsRenderer({suppressMarkers:true,preserveViewport:true});
                             directions[i].setMap(map.map);
                             directions[i].setDirections(response);
                         }
@@ -145,7 +145,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     }, function(newVal, oldVal) {
         if (newVal == oldVal) return;
 
-        var bounds = new google.maps.LatLngBounds();
+        var marker_bounds = new google.maps.LatLngBounds();
 
         var hposition = new google.maps.LatLng(Places.hotel.geometry.location.lat,
                                               Places.hotel.geometry.location.lng);
@@ -157,7 +157,6 @@ app.factory('Map', function($rootScope, Matrix, Places) {
             map: map.map,
             icon: '/img/pinh.png'
         });
-        bounds.extend(hposition);
 
         var markers = _.map(newVal, function(place, i) {
             var position = new google.maps.LatLng(place.location.lat, place.location.lng);
@@ -167,11 +166,16 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                 map: map.map,
                 icon: '/img/pin' + (i + 1) + '.png'
             });
-            bounds.extend(position);
+        });
+
+        _.each(points,function(point) {
+            marker_bounds.extend(point);
         });
         points.push(hposition);
         map.calcRoute(points);
-        map.map.fitBounds(bounds);
+        console.log('here',marker_bounds);
+        map.map.fitBounds(marker_bounds);
+        map.map.setZoom(map.map.getZoom()-1);
     });
     return map;
 });
