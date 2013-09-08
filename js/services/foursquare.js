@@ -73,6 +73,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
+    this.route=[];
 		this.ll=ll;
 		this.getNext(ll, 'T');
 		this.done = done;
@@ -139,7 +140,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		var self = this;
 		var scores = [];
 		_.each(venues, function(venue){
-			if (venue.categories[0].name === "Coffee Shop" || venue.categories[0].name==="Hotel" || venue.categories[0].name === "Office" || venue.categories[0].name === "Grocery Store")
+			if (venue.categories[0].name === "Coffee Shop" || venue.categories[0].name==="Hotel" || venue.categories[0].name === "Office" || venue.categories[0].name === "Grocery Store"|| venue.categories[0].name === "Bank"|| venue.categories[0].name === "Bookstore")
 				scores.push(0);
 			else if (self.alreadyInRoute(venue))
 				scores.push(0);
