@@ -135,12 +135,10 @@ button:active {
   top: 0;
   left: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.9);
   color: #444;
   width: 300px;
   text-align: left;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   border-left: 1px solid #aaa;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
   -webkit-transition: -webkit-transform 200ms;
@@ -153,9 +151,57 @@ button:active {
 .screen-places.show {
   -webkit-transform: translateX(0);
 }
+.screen-places .col1,
+.screen-places .col2 {
+  width: 300px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #eaeaea;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-transition: left 200ms;
+  -moz-transition: left 200ms;
+  -o-transition: left 200ms;
+  -ms-transition: left 200ms;
+  transition: left 200ms;
+}
+.screen-places .col1 {
+  left: 0;
+}
+.screen-places .col2 {
+  left: 300px;
+  border-left: 1px solid #bbb;
+}
+.screen-places .col2.show {
+  left: -1px;
+}
+.screen-places .col2 div.info {
+  padding: 10px;
+}
+.screen-places .col2 div.info .type {
+  text-transform: uppercase;
+  color: #888;
+  font-size: 10pt;
+  line-height: 1.6;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 220px;
+  overflow: hidden;
+  display: inline-block;
+}
+.screen-places .col2 div.info .address {
+  font-size: 12pt;
+  margin-left: 1px;
+  color: #555;
+}
+.screen-places .col2 div.info h2 {
+  margin: 0;
+  font-size: 14pt;
+}
 .screen-places .controls-top {
   float: right;
-  margin: 5px;
+  margin: 5px 10px 5px 5px;
 }
 .screen-places .controls-top i {
   margin-left: 10px;
@@ -173,6 +219,16 @@ button:active {
   line-height: 1;
   font-weight: 700;
   text-transform: uppercase;
+}
+.screen-places h1 a {
+  color: #555;
+  cursor: pointer;
+}
+.screen-places h1 a:hover {
+  color: #699e6b;
+}
+.screen-places h1 i {
+  font-size: 8pt;
 }
 .screen-places ul {
   list-style: none;
@@ -212,6 +268,29 @@ button:active {
 .screen-places ul li div.info:active {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
 }
+.screen-places ul li div.info .type {
+  text-transform: uppercase;
+  color: #888;
+  font-size: 10pt;
+  line-height: 1.6;
+  margin-left: 38px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 220px;
+  overflow: hidden;
+  display: inline-block;
+}
+.screen-places ul li div.info .address {
+  font-size: 12pt;
+  margin-left: 1px;
+  color: #555;
+  margin-left: 38px;
+}
+.screen-places ul li div.info h2 {
+  margin: 0;
+  margin-left: 38px;
+  font-size: 14pt;
+}
 .screen-places ul li:hover {
   background: #fff;
 }
@@ -234,24 +313,6 @@ button:active {
   position: absolute;
   left: 10px;
   top: 32px;
-}
-.screen-places ul li .type {
-  text-transform: uppercase;
-  color: #888;
-  font-size: 10pt;
-  line-height: 1.6;
-  margin-left: 38px;
-}
-.screen-places ul li .address {
-  font-size: 12pt;
-  margin-left: 1px;
-  color: #555;
-  margin-left: 38px;
-}
-.screen-places ul li h2 {
-  margin: 0;
-  margin-left: 38px;
-  font-size: 14pt;
 }
 .screen-places ul li .controls {
   position: absolute;

@@ -29,12 +29,13 @@
             <div class="map"></div>
         </div>
         <div class="screen-places" ng-controller="PlacesController">
-            <div class="controls-top">
-                <i class="icon-reply" ng-click="resetPlaces()"></i>
-            </div>
-            <h1>Places</h1>
-            <ul>
-                <li ng-repeat="place in places.list">
+            <div class="col1">
+                <div class="controls-top">
+                    <i class="icon-reply" ng-click="resetPlaces()"></i>
+                </div>
+                <h1>Itinerary</h1>
+                <ul>
+                    <li ng-repeat="place in places.list">
                     <div class="info" ng-click="placeInfo(place, $index)">
                         <span class="type">{{ place.categories[0].name }}</span>
                         <h2>
@@ -48,8 +49,22 @@
                             <i class="icon-refresh" ng-click="replacePlace(place, $index)"></i>
                         </span>
                     </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col2" ng-class="{ show: (!!selectedPlace) }">
+                <h1><a ng-click="selectedPlace = null">
+                        <i class="icon-chevron-left"></i> Back to Itinerary
+                </a></h1>
+
+                <div class="info">
+                    <span class="type">{{ selectedPlace.categories[0].name }}</span>
+                    <h2>
+                        {{ selectedPlace.name }}
+                    </h2>
+                    <span class="address">{{ selectedPlace.location.address }}</span>
+                </div>
+            </div>
         </div>
         <div class="screen-plan-form" ng-controller="PlanFormController">
             <div class="main" ng-show="!loading">
