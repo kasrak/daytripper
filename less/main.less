@@ -151,12 +151,10 @@ button {
     top: 0;
     left: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.9);
     color: #444;
     width: 300px;
     text-align: left;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     border-left: 1px solid #aaa;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
     .transition(~"transform 200ms");
@@ -164,6 +162,57 @@ button {
 
     &.show {
         -webkit-transform: translateX(0);
+    }
+
+    .col1, .col2 {
+        width: 300px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        background: #eaeaea;
+        overflow-x: hidden;
+        overflow-y: auto;
+        .transition(~"left 200ms");
+    }
+
+    .col1 {
+        left: 0;
+    }
+
+    .col2 {
+        left: 300px;
+        border-left: 1px solid #bbb;
+
+        &.show {
+            left: -1px;
+        }
+
+        div.info {
+            padding: 10px;
+
+            .type {
+                text-transform: uppercase;
+                color: #888;
+                font-size: 10pt;
+                line-height: 1.6;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                width: 220px;
+                overflow: hidden;
+                display: inline-block;
+            }
+
+            .address {
+                font-size: 12pt;
+                margin-left: 1px;
+                color: #555;
+            }
+
+            h2 {
+                margin: 0;
+                font-size: 14pt;
+            }
+        }
     }
 
     .controls-top {
@@ -189,6 +238,19 @@ button {
         line-height: 1;
         font-weight: 700;
         text-transform: uppercase;
+
+        a {
+            color: #555;
+            cursor: pointer;
+
+            &:hover {
+                color: rgb(105, 158, 107);
+            }
+        }
+
+        i {
+            font-size: 8pt;
+        }
     }
 
     ul {
@@ -216,6 +278,32 @@ button {
                 &:active {
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
                 }
+
+                .type {
+                    text-transform: uppercase;
+                    color: #888;
+                    font-size: 10pt;
+                    line-height: 1.6;
+                    margin-left: 38px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 220px;
+                    overflow: hidden;
+                    display: inline-block;
+                }
+
+                .address {
+                    font-size: 12pt;
+                    margin-left: 1px;
+                    color: #555;
+                    margin-left: 38px;
+                }
+
+                h2 {
+                    margin: 0;
+                    margin-left: 38px;
+                    font-size: 14pt;
+                }
             }
 
             &:hover {
@@ -242,27 +330,6 @@ button {
                 position: absolute;
                 left: 10px;
                 top: 32px;
-            }
-
-            .type {
-                text-transform: uppercase;
-                color: #888;
-                font-size: 10pt;
-                line-height: 1.6;
-                margin-left: 38px;
-            }
-
-            .address {
-                font-size: 12pt;
-                margin-left: 1px;
-                color: #555;
-                margin-left: 38px;
-            }
-
-            h2 {
-                margin: 0;
-                margin-left: 38px;
-                font-size: 14pt;
             }
 
             .controls {
