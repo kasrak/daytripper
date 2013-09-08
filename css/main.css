@@ -199,6 +199,10 @@ button:active {
   margin: 0;
   font-size: 14pt;
 }
+.screen-places .col2 .photos .photo {
+  width: 33%;
+  float: left;
+}
 .screen-places .controls-top {
   float: right;
   margin: 5px 10px 5px 5px;

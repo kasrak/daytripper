@@ -66,6 +66,9 @@
                 </div>
 
                 <div class="photos">
+                    <div class="photo" ng-repeat="photo in selectedPlaceInfo.photos">
+                        <img ng-src="{{ photo.sizes.items[2].url }}">
+                    </div>
                 </div>
             </div>
         </div>

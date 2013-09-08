@@ -160,6 +160,7 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
         Foursquare.getInfo(newVal.id, function(info) {
             $scope.$apply(function() {
                 $scope.selectedPlaceInfo = info;
+                console.log(info);
             });
         });
     });
