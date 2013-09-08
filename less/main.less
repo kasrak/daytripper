@@ -82,7 +82,7 @@ button {
     background: rgba(0, 0, 0, 0.6);
     border-radius: 3px;
     text-align: center;
-    -webkit-transform: translateZ(1px);
+    -webkit-transform: translateZ(2px);
     overflow: hidden;
 
     .main {
@@ -155,13 +155,12 @@ button {
     color: #444;
     width: 400px;
     text-align: left;
-    -webkit-transform: translateZ(1px);
     overflow-x: hidden;
     overflow-y: auto;
     border-left: 1px solid #aaa;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
     .transition(~"transform 200ms");
-    -webkit-transform: translateX(-405px);
+    -webkit-transform: translateZ(0) translateX(-405px);
 
     &.show {
         -webkit-transform: translateX(0);
@@ -239,8 +238,10 @@ button {
                 height: 20px;
                 line-height: 1.6;
                 text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
-                float: left;
                 margin: -3px 6px 10px 0;
+                position: absolute;
+                left: 10px;
+                top: 32px;
             }
 
             .type {
@@ -255,10 +256,12 @@ button {
                 font-size: 12pt;
                 margin-left: 1px;
                 color: #555;
+                margin-left: 38px;
             }
 
             h2 {
                 margin: 0;
+                margin-left: 38px;
             }
 
             .controls {
