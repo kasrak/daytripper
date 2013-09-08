@@ -32,6 +32,13 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
     $scope.loading = false;
     $scope.places = Places;
 
+    $scope.reset = function() {
+        Places.hide();
+        Places.clear();
+        $scope.addresses.clear();
+        $scope.loading = false;
+    };
+
     var shouldAutocomplete = true;
 
     $scope.$watch('addressInput', function(newVal, oldVal) {
@@ -118,15 +125,33 @@ app.controller('PlacesController', function($scope, Places) {
     $scope.places = Places;
 
     $scope.resetPlaces = function() {
-        console.log('reset');
+        $('.screen-plan-form').show();
+        angular.element($('.screen-plan-form')[0]).scope().reset();
     };
 
     $scope.refreshPlaces = function() {
         console.log('refresh');
     };
 
-    $scope.removePlace = function(place) {
-        console.log('remove', place);
+    $scope.replacePlace = function(place, idx) {
+        var type;
+        switch (idx) {
+            case 0:
+                type = 'B';
+                break;
+            case 2:
+                type = 'L';
+                break;
+            case 4:
+                type = 'D';
+                break;
+            case 6:
+                type = 'N';
+                break;
+            default:
+                type = 'T';
+        }
+        Places.replace(idx, type);
     };
 
     $scope.placeInfo = function(place) {
