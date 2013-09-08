@@ -115,30 +115,30 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         var directionsService = new google.maps.DirectionsService();
         var directions = [];
         for (var i=0; i < (points.length-1); i++) {
-            var origin = points[i];
-            var destination = points[(i+1)];
-            var request = {
-                origin: origin,
-                destination: destination,
-                travelMode: google.maps.DirectionsTravelMode.WALKING
-            };
-            Matrix.run([origin],[destination],function(response,status) {
-                if (response.rows[0].elements[0].distance.value > 1000) {
-                    request["travelMode"] = google.maps.DirectionsTravelMode.DRIVING;
-                }
-                directionsService.route(request, function(response,status) {
-                    if (status != google.maps.DirectionsStatus.OK) {
-                        console.log('ERR Route', status);
-                    } else {
-                        directions[i] = new google.maps.DirectionsRenderer
-                            ({suppressMarkers:true});
-                        directions[i].setMap(map.map);
-                        directions[i].setDirections(response);
-                    }
+            (function(origin, destination) {
+                Matrix.run([origin],[destination],function(response,status) {
+                  var req = {
+                    origin: origin,
+                    destination: destination,
+                  };
+                  if (response.rows[0].elements[0].distance.value > 1000) {
+                        req.travelMode = google.maps.DirectionsTravelMode.DRIVING;
+                  } else {
+                        req.travelMode = google.maps.DirectionsTravelMode.WALKING;
+                  }
+                  directionsService.route(req, function(response,status) {
+                        if (status != google.maps.DirectionsStatus.OK) {
+                            console.log('ERR Route', status);
+                        } else {
+                            directions[i] = new google.maps.DirectionsRenderer({suppressMarkers:true});
+                            directions[i].setMap(map.map);
+                            directions[i].setDirections(response);
+                        }
+                    });
                 });
-            });debugger;
+            })(points[i], points[i+1]);
         }
-    };
+    }
 
     $rootScope.$watch(function() {
         return Places.list;
