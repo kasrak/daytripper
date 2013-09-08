@@ -178,6 +178,24 @@ button:active {
 }
 .screen-places .col2 div.info {
   padding: 10px;
+  position: relative;
+}
+.screen-places .col2 div.info .marker {
+  display: inline-block;
+  font-size: 10pt;
+  font-weight: 700;
+  padding: 5px;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  min-width: 20px;
+  height: 20px;
+  line-height: 1.6;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+  margin: -3px 6px 10px 0;
+  position: absolute;
+  left: 10px;
+  top: 32px;
 }
 .screen-places .col2 div.info .type {
   text-transform: uppercase;
@@ -189,14 +207,16 @@ button:active {
   width: 220px;
   overflow: hidden;
   display: inline-block;
+  margin-left: 38px;
 }
 .screen-places .col2 div.info .address {
   font-size: 12pt;
-  margin-left: 1px;
+  margin-left: 38px;
   color: #555;
 }
 .screen-places .col2 div.info h2 {
   margin: 0;
+  margin-left: 38px;
   font-size: 14pt;
 }
 .screen-places .col2 .photos .photo {
@@ -234,31 +254,38 @@ button:active {
 .screen-places h1 i {
   font-size: 8pt;
 }
+.screen-places li:nth-child(1) .marker,
+.screen-places .marker.idx1 {
+  background: #74b422;
+}
+.screen-places li:nth-child(2) .marker,
+.screen-places .marker.idx2 {
+  background: #E66711;
+}
+.screen-places li:nth-child(3) .marker,
+.screen-places .marker.idx3 {
+  background: #E25353;
+}
+.screen-places li:nth-child(4) .marker,
+.screen-places .marker.idx4 {
+  background: #9761A2;
+}
+.screen-places li:nth-child(5) .marker,
+.screen-places .marker.idx5 {
+  background: #4967C7;
+}
+.screen-places li:nth-child(6) .marker,
+.screen-places .marker.idx6 {
+  background: #1DA2AD;
+}
+.screen-places li:nth-child(7) .marker,
+.screen-places .marker.idx7 {
+  background: #42a777;
+}
 .screen-places ul {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-.screen-places ul li:nth-child(1) .marker {
-  background: #74b422;
-}
-.screen-places ul li:nth-child(2) .marker {
-  background: #E66711;
-}
-.screen-places ul li:nth-child(3) .marker {
-  background: #E25353;
-}
-.screen-places ul li:nth-child(4) .marker {
-  background: #9761A2;
-}
-.screen-places ul li:nth-child(5) .marker {
-  background: #4967C7;
-}
-.screen-places ul li:nth-child(6) .marker {
-  background: #1DA2AD;
-}
-.screen-places ul li:nth-child(7) .marker {
-  background: #42a777;
 }
 .screen-places ul li {
   border-bottom: 1px solid #aaa;
@@ -286,7 +313,6 @@ button:active {
 }
 .screen-places ul li div.info .address {
   font-size: 12pt;
-  margin-left: 1px;
   color: #555;
   margin-left: 38px;
 }

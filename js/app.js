@@ -154,6 +154,7 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
 
     $scope.selectedPlace = null;
     $scope.selectedPlaceInfo = null;
+    $scope.selectedPlaceNumber = 0;
     $scope.$watch('selectedPlace', function(newVal, oldVal) {
         if (newVal == oldVal) return;
 
@@ -161,17 +162,23 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
             Map.unhighlight();
             return;
         }
-
-        Foursquare.getInfo(newVal.id, function(info) {
-            $scope.$apply(function() {
+        Foursquare.getInfo(newVal.id, function(info, cached) {
+            var fn = function() {
                 $scope.selectedPlaceInfo = info;
                 console.log(info);
-            });
+            };
+
+            if (cached) {
+                fn();
+            } else {
+                $scope.$apply(fn);
+            }
         });
     });
 
     $scope.placeInfo = function(place, idx) {
         $scope.selectedPlace = place;
+        $scope.selectedPlaceNumber = idx + 1;
         Map.highlight(idx);
     };
 });

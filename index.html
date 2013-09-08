@@ -60,6 +60,15 @@
                 <div class="info">
                     <span class="type">{{ selectedPlace.categories[0].name }}</span>
                     <h2>
+                        <span class="marker" ng-class="{
+                            idx1: (selectedPlaceNumber == 1),
+                            idx2: (selectedPlaceNumber == 2),
+                            idx3: (selectedPlaceNumber == 3),
+                            idx4: (selectedPlaceNumber == 4),
+                            idx5: (selectedPlaceNumber == 5),
+                            idx6: (selectedPlaceNumber == 6),
+                            idx7: (selectedPlaceNumber == 7)
+                            }">{{ selectedPlaceNumber }}</span>
                         {{ selectedPlace.name }}
                     </h2>
                     <span class="address">{{ selectedPlace.location.address }}</span>
@@ -69,6 +78,9 @@
                     <div class="photo" ng-repeat="photo in selectedPlaceInfo.photos">
                         <img ng-src="{{ photo.sizes.items[2].url }}">
                     </div>
+                </div>
+
+                <div class="directions">
                 </div>
             </div>
         </div>

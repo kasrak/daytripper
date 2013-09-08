@@ -296,7 +296,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   var _venueCache = {};
   Foursquare.prototype.getInfo = function(venueId, infocb){
     if (venueId in _venueCache) {
-        infocb(_venueCache[venueId]);
+        infocb(_venueCache[venueId], true);
         return;
     }
 
@@ -332,6 +332,9 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 
    jxhr.push(
 		$.getJSON(url, function(data){
+            if (!data.response.photos.groups[1]) {
+                return;
+            }
 			info.photos = data.response.photos.groups[1].items.slice(0, 3);
 		})
 		.fail(function(error){
