@@ -153,19 +153,19 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
     };
 
     $scope.selectedPlace = null;
+    $scope.selectedPlaceInfo = null;
     $scope.$watch('selectedPlace', function(newVal, oldVal) {
-        if (newVal == oldVal) return;
+        if (newVal == oldVal || !newVal) return;
 
         Foursquare.getInfo(newVal.id, function(info) {
             $scope.$apply(function() {
-                $scope.selectedPlace.info = info;
+                $scope.selectedPlaceInfo = info;
             });
         });
     });
 
     $scope.placeInfo = function(place, idx) {
         $scope.selectedPlace = place;
-        console.log('info', place);
         Map.highlight(idx);
     };
 });
