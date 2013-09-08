@@ -112,10 +112,11 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     };
 
     var routes = [];
+    var route_ind = [];
     map.calcRoute = function(points) {
         var directionsService = new google.maps.DirectionsService();
         for (var i=0; i < (points.length-1); i++) {
-            (function(origin, destination) {
+            (function(origin, destination, idx) {
                 Matrix.run([origin],[destination],function(response,status) {
                   var req = {
                     origin: origin,
@@ -126,7 +127,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                   } else {
                         req.travelMode = google.maps.DirectionsTravelMode.WALKING;
                   }
-                  directionsService.route(req, function(response,status) {
+                  directionsService.route(req,function(response,status) {
                         if (status != google.maps.DirectionsStatus.OK) {
                             console.log('ERR Route', status);
                         } else {
@@ -134,17 +135,23 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                             renderer.setMap(map.map);
                             renderer.setDirections(response);
                             routes.push(renderer);
+                            route_ind.push(idx);
                         }
                     });
                 });
-            })(points[i], points[i+1]);
+            })(points[i], points[i+1], i);
         }
     };
 
     map.shouldUpdateBounds = true;
     map.highlight = function(route) {
         _.each(routes, function(leg,i) {
-            if (route != (i+1)) {
+            if (route == route_ind[i]) {
+                leg.setMap(map.map);
+                console.log('here',leg);
+                map.map.fitBounds(leg.directions.routes[0].bounds);
+                map.map.setZoom(map.map.getZoom()-1);
+            } else {
                 leg.setMap(null);
             }
         });
@@ -165,6 +172,8 @@ app.factory('Map', function($rootScope, Matrix, Places) {
             route.setMap(null);
         });
         routes.length = 0;
+
+        route_ind.length = 0;
 
         var bounds = new google.maps.LatLngBounds();
 
