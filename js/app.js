@@ -156,7 +156,11 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
     $scope.$watch('directions', function(newVal, oldVal) {
         if (newVal == oldVal) return;
 
-
+        if (newVal == 'to') {
+            Map.replaceRoute($scope.selectedPlaceNumber - 1, $scope.selectedPlaceNumber);
+        } else { // from
+            Map.replaceRoute($scope.selectedPlaceNumber - 2, $scope.selectedPlaceNumber - 1);
+        }
     });
     $scope.selectedPlace = null;
     $scope.selectedPlaceInfo = null;
@@ -171,7 +175,6 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
         Foursquare.getInfo(newVal.id, function(info, cached) {
             var fn = function() {
                 $scope.selectedPlaceInfo = info;
-                console.log(info);
             };
 
             if (cached) {

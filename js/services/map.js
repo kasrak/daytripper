@@ -170,6 +170,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                 map.map.setZoom(map.map.getZoom()-1);
                 leg.setPanel($('.col2 .directions')[0]);
             }
+        });
     };
 
     map.unhighlight = function() {
