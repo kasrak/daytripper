@@ -130,7 +130,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                         if (status != google.maps.DirectionsStatus.OK) {
                             console.log('ERR Route', status);
                         } else {
-                            var renderer = new google.maps.DirectionsRenderer({suppressMarkers:true});
+                            var renderer = new google.maps.DirectionsRenderer({suppressMarkers:true, preserveViewport:true});
                             renderer.setMap(map.map);
                             renderer.setDirections(response);
                             routes.push(renderer);
@@ -173,7 +173,6 @@ app.factory('Map', function($rootScope, Matrix, Places) {
             map: map.map,
             icon: '/img/pinh.png'
         }));
-        bounds.extend(hposition);
 
         _.each(newVal, function(place, i) {
             var position = new google.maps.LatLng(place.location.lat, place.location.lng);
@@ -183,11 +182,15 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                 map: map.map,
                 icon: '/img/pin' + (i + 1) + '.png'
             }));
-            bounds.extend(position);
+        });
+
+        _.each(points,function(point) {
+            bounds.extend(point);
         });
         points.push(hposition);
         map.calcRoute(points);
         map.map.fitBounds(bounds);
+        map.map.setZoom(map.map.getZoom()-1);
     });
     return map;
 });

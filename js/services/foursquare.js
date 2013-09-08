@@ -104,6 +104,21 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.foundcb = foundcb;
 		this.index = index;
 		var radius = 500;
+		if (index > 0 && index < this.route.length - 1){
+			ll2 = [this.route[index-1].location.lat, this.route[index-1].location.lng];
+			ll1 = [this.route[index+1].location.lat, this.route[index+1].location.lng];
+		}else{
+			if (index == 0){
+				ll2 = [this.route[1].location.lat, this.route[1].location.lng];
+				ll1 = this.ll;
+			}else if (index == this.route.length-1){
+				ll2 = [this.route[index-1].location.lat, this.route[index-1].location.lng];
+				ll1 = this.ll;
+			}
+		}
+
+		var ll = [(ll1[0]+ll2[0])/2, (ll1[1]+ll2[1])/2];
+	
 		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
 		Matrix.run([pointa], [pointb], function(response, status){
@@ -260,7 +275,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		console.log(url);
 
 		$.getJSON(url, function(data){
-			data = data.response.groups[0].items;
+			var data = data.response.groups[0].items;
 			if (data.length <1){
 				self.done();
 				self.progress(1);
@@ -278,6 +293,23 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 				self.replace(null);
 		});
 	};
+
+  Foursquare.prototype.getTips = function(venueId, tipscb){
+		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
+
+    console.log(url);
+    
+		$.getJSON(url, function(data){
+			console.log(data);
+      		var status = "success";
+			tipscb(data, status);	
+		})
+		.fail(function(error){
+			console.log("Foursquare api error: ", error);
+      		var status = "failed";
+			tipscb(error, status);	
+		});
+  };
 
     return new Foursquare();
 });
