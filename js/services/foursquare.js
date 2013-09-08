@@ -108,17 +108,17 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 			ll2 = [this.route[index-1].location.lat, this.route[index-1].location.lng];
 			ll1 = [this.route[index+1].location.lat, this.route[index+1].location.lng];
 		}else{
-			if (index == 0){
+			if (index === 0) {
 				ll2 = [this.route[1].location.lat, this.route[1].location.lng];
 				ll1 = this.ll;
-			}else if (index == this.route.length-1){
+			} else if (index == this.route.length-1){
 				ll2 = [this.route[index-1].location.lat, this.route[index-1].location.lng];
 				ll1 = this.ll;
 			}
 		}
 
 		var ll = [(ll1[0]+ll2[0])/2, (ll1[1]+ll2[1])/2];
-	
+
 		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
 		Matrix.run([pointa], [pointb], function(response, status){
@@ -272,10 +272,8 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 
 		var url = "https://api.foursquare.com/v2/venues/search?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&categoryId="+getStrList(category)+"&ll="+getStrList(ll)+"&radius="+radius+"&intent=browse";
 
-		console.log(url);
-
 		$.getJSON(url, function(data){
-			var data = data.response.groups[0].items;
+			data = data.response.groups[0].items;
 			if (data.length <1){
 				self.done();
 				self.progress(1);
@@ -298,16 +296,16 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
 
     console.log(url);
-    
+
 		$.getJSON(url, function(data){
 			console.log(data);
-      		var status = "success";
-			tipscb(data, status);	
+            var status = "success";
+			tipscb(data, status);
 		})
 		.fail(function(error){
 			console.log("Foursquare api error: ", error);
-      		var status = "failed";
-			tipscb(error, status);	
+            var status = "failed";
+			tipscb(error, status);
 		});
   };
 
