@@ -123,7 +123,7 @@ app.factory('Map', function(Matrix) {
                 travelMode: google.maps.DirectionsTravelMode.WALKING
             };
             Matrix.run([origin],[destination],function(response,status) {
-                if (response.rows[0].elements.distance.value > 1000) {
+                if (response.rows[0].elements[0].distance.value > 1000) {
                     request[travelMode] = google.maps.DirectionsTravelMode.DRIVING;
                 }
             });
