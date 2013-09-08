@@ -71,7 +71,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.progress = null;
 		this.foundcb = null;
 		
-		this.getInfo("3fd66200f964a5209df11ee3", null);
+		//this.getInfo("3fd66200f964a5209df11ee3", null);
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
