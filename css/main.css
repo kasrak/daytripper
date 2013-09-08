@@ -228,6 +228,42 @@ button:active {
   width: 33%;
   float: left;
 }
+.screen-places .col2 .directions,
+.screen-places .col2 .directions-chooser {
+  clear: both;
+  padding: 10px;
+}
+.screen-places .col2 .directions-chooser a {
+  display: inline-block;
+  border: 1px solid #bbb;
+  width: 122px;
+  padding: 4px;
+  float: left;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #fafafa;
+}
+.screen-places .col2 .directions-chooser a.selected {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+  background: #f0f0f0;
+}
+.screen-places .col2 .directions-chooser a:first-child {
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+}
+.screen-places .col2 .directions-chooser a:last-child {
+  border-radius: 0 4px 4px 0;
+}
+.screen-places .col2 .directions-chooser a small {
+  display: block;
+}
+.screen-places .col2 .directions-chooser a span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 120px;
+}
 .screen-places .controls-top {
   float: right;
   margin: 5px 10px 5px 5px;

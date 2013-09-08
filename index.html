@@ -80,11 +80,28 @@
                     </div>
                 </div>
 
+                <div class="directions-chooser">
+                    <a title="Direction from {{ selectedPlacePrev.name }}"
+                        ng-click="directions = 'from'"
+                        ng-class="{selected: directions == 'from' }"
+                        >
+                        <small>Directions from</small>
+                        <span>{{ selectedPlacePrev.name }}</span>
+                    </a>
+                    <a title="Directions to {{ selectedPlaceNext.name }}"
+                        ng-click="directions = 'to'"
+                        ng-class="{selected: directions == 'to' }"
+                        >
+                        <small>Directions to</small>
+                        <span>{{ selectedPlaceNext.name }}</span>
+                    </a>
+                </div>
+
                 <div class="directions">
                 </div>
 
                 <div class="notice">
-                    Data from Foursquare
+                    Venue data from Foursquare
                 </div>
             </div>
         </div>

@@ -152,6 +152,12 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
         Places.replace(idx, type);
     };
 
+    $scope.directions = 'to';
+    $scope.$watch('directions', function(newVal, oldVal) {
+        if (newVal == oldVal) return;
+
+
+    });
     $scope.selectedPlace = null;
     $scope.selectedPlaceInfo = null;
     $scope.selectedPlaceNumber = 0;
@@ -177,7 +183,13 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
     });
 
     $scope.placeInfo = function(place, idx) {
+        var hotel = {
+            name: 'Hotel',
+            hotel: true
+        };
         $scope.selectedPlace = place;
+        $scope.selectedPlaceNext = Places.list[idx + 1] || hotel;
+        $scope.selectedPlacePrev = Places.list[idx - 1] || hotel;
         $scope.selectedPlaceNumber = idx + 1;
         Map.highlight(idx);
     };

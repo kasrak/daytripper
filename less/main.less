@@ -247,6 +247,48 @@ button {
                 float: left;
             }
         }
+
+        .directions, .directions-chooser {
+            clear: both;
+            padding: 10px;
+        }
+
+        .directions-chooser a {
+            display: inline-block;
+            border: 1px solid #bbb;
+            width: 122px;
+            padding: 4px;
+            float: left;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #fafafa;
+
+            &.selected {
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+                background: #f0f0f0;
+            }
+
+            &:first-child {
+                border-right: 0;
+                border-radius: 4px 0 0 4px;
+            }
+
+            &:last-child {
+                border-radius: 0 4px 4px 0;
+            }
+
+            small {
+                display: block;
+            }
+
+            span {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+                width: 120px;
+            }
+        }
     }
 
     .controls-top {
