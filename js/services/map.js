@@ -158,6 +158,15 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         });
     };
 
+    map.replaceRoute = function(a,b) {
+        a.setMap(null);
+        a.setPanel(null);
+        b.setMap(map.map);
+        map.map.fitBounds(b.directions.routes[0].bounds);
+        map.map.setZoom(map.map.getZoom()-1);
+        b.setPanel($('.col2 .directions')[0]);
+    };
+
     map.unhighlight = function() {
         var bounds = new google.maps.LatLngBounds();
         _.each(routes,function(leg) {
