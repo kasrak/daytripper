@@ -71,7 +71,7 @@ app.factory('Places', function($rootScope, Foursquare, Progress) {
 
     Places.prototype.show = function() {
         $places.addClass('show');
-        $mapbox.css('left', '400px');
+        $mapbox.css('left', '300px');
     };
 
     Places.prototype.hide = function() {
