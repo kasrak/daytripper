@@ -141,11 +141,19 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         }
     };
 
+    map.shouldUpdateBounds = true;
+    map.highlight = function(route) {
+        _.each(routes, function(leg,i) {
+            if (route != (i+1)) {
+                leg.setMap(null);
+            }
+        });
+    };
+
     var markers = [];
     $rootScope.$watch(function() {
         return Places.list;
     }, function(newVal, oldVal) {
-        console.log(newVal, oldVal, newVal == oldVal);
         if (newVal == oldVal) return;
 
         _.each(markers, function(marker) {
@@ -190,8 +198,12 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         });
         points.push(hposition);
         map.calcRoute(points);
-        map.map.fitBounds(bounds);
-        map.map.setZoom(map.map.getZoom()-1);
+
+        if (map.shouldUpdateBounds) {
+            map.shouldUpdateBounds = false;
+            map.map.fitBounds(bounds);
+            map.map.setZoom(map.map.getZoom()-1);
+        }
     }, true);
     return map;
 });

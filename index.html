@@ -23,8 +23,6 @@
         <script type="text/javascript"
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL6tNRApDGQihPX6SpknMeTVedwGwVJ9g&sensor=false">
         </script>
-
-        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     </head>
     <body ng-app="app">
         <div id="mapbox">
@@ -37,7 +35,7 @@
             <h1>Places</h1>
             <ul>
                 <li ng-repeat="place in places.list">
-                    <div class="info" ng-click="placeInfo(place)">
+                    <div class="info" ng-click="placeInfo(place, $index)">
                         <span class="type">{{ place.categories[0].name }}</span>
                         <h2>
                             <span class="marker">{{ ($index + 1) }}</span>
@@ -47,7 +45,7 @@
                     </div>
                     <div class="controls">
                         <span class="control">
-                            <i class="icon-remove" ng-click="replacePlace(place, $index)"></i>
+                            <i class="icon-refresh" ng-click="replacePlace(place, $index)"></i>
                         </span>
                     </div>
                 </li>
