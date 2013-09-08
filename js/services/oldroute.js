@@ -70,11 +70,13 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
+		//this.ll = [43.652, -79.382];
+		//this.getNext([43.652, -79.382], 'B');
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
 		this.ll=ll;
-		this.getNext(ll, 'T');
+		this.getNext(ll, 'B');
 		this.done = done;
 		this.progress = progress;
 	};
@@ -100,23 +102,12 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
 		Matrix.run([pointa], [pointb], function(response, status){
              radius = response.rows[0].elements[0].distance.value/2;
-			 if (radius < 500)
-				radius = 500;
 		});
 		this.call4sq(ll, radius, type, 'r');
 	};
 
 	Foursquare.prototype.getNext = function(ll, type) {
 		var radius = 8000;
-    if (this.route.length > 0){
-      var prev;
-      if (this.route.length == 1)
-        prev = this.ll;
-      else
-        prev = [this.route[0].location.lat, this.route[0].location.lng];
-      ll[0] = ll[0] + 0.5*(ll[0] - prev[0]);
-      ll[1] = ll[1] + 0.5*(ll[1] - prev[1]);
-    }
 		this.call4sq(ll, radius, type, 'a');
     };
 
@@ -158,27 +149,8 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	};
 
 	Foursquare.prototype.append = function(venues){
-		if (venues != null){
-			switch(this.route.length){
-        case 0:
-        case 1:
-        case 2:
-          this.route.push(venues[this.getBest(venues)]);
-          break;
-        case 3:
-          this.route.splice(0,0,venues[this.getBest(venues)]);
-          break;
-        case 4:
-          this.route.splice(2,0,venues[this.getBest(venues)]);
-          break;
-        case 5:
-          this.route.splice(4,0,venues[this.getBest(venues)]);
-          break;
-        case 6:
-          this.route.splice(6,0,venues[this.getBest(venues)]);
-          break;
-      }
-		}
+		if (venues != null)
+			this.route.push(venues[this.getBest(venues)]);
 
 
 		switch(this.route.length){
@@ -187,23 +159,23 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 				this.progress(1/7);
 				break;
 			case 2:
-				this.getNext([this.route[1].location.lat,this.route[1].location.lng], 'T');
+				this.getNext([this.route[1].location.lat,this.route[1].location.lng], 'L');
 				this.progress(2/7);
 				break;
 			case 3:
-				this.getMiddleVenue(this.ll, [this.route[0].location.lat,this.route[0].location.lng], 'B');
+				this.getNext([this.route[2].location.lat,this.route[2].location.lng], 'T');
 				this.progress(3/7);
 				break;
 			case 4:
-				this.getMiddleVenue([this.route[2].location.lat,this.route[2].location.lng], [this.route[1].location.lat,this.route[1].location.lng], 'L');
+				this.getNext([this.route[3].location.lat,this.route[3].location.lng], 'D');
 				this.progress(4/7);
 				break;
 			case 5:
-				this.getMiddleVenue([this.route[4].location.lat,this.route[4].location.lng], [this.route[3].location.lat,this.route[3].location.lng], 'D');
+				this.getNext([this.route[4].location.lat,this.route[4].location.lng], 'T');
 				this.progress(5/7);
 				break;
 			case 6:
-				this.getMiddleVenue([this.route[5].location.lat,this.route[5].location.lng],this.ll, 'N');
+				this.getMiddleVenue([this.route[4].location.lat,this.route[4].location.lng],this.ll, 'N');
 				this.progress(6/7);
 				break;
 			case 7:
