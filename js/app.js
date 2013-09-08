@@ -122,7 +122,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
     });
 });
 
-app.controller('PlacesController', function($scope, Places) {
+app.controller('PlacesController', function($scope, Places, Map) {
     $scope.places = Places;
 
     $scope.resetPlaces = function() {
@@ -151,8 +151,9 @@ app.controller('PlacesController', function($scope, Places) {
         Places.replace(idx, type);
     };
 
-    $scope.placeInfo = function(place) {
+    $scope.placeInfo = function(place, idx) {
         console.log('info', place);
+        Map.highlight(idx);
     };
 });
 
