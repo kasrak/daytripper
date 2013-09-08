@@ -150,6 +150,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                 leg.setMap(map.map);
                 map.map.fitBounds(leg.directions.routes[0].bounds);
                 map.map.setZoom(map.map.getZoom()-1);
+                leg.directions.setPanel(document.getElementById(''));
             } else {
                 leg.setMap(null);
             }
