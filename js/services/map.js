@@ -142,6 +142,12 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     };
 
     map.shouldUpdateBounds = true;
+    map.highlight = function(route) {
+        _.each(routes, function(leg,i) {
+            if (route != (i+1)) {
+                leg.setMap(null);
+        });
+    };
 
     var markers = [];
     $rootScope.$watch(function() {

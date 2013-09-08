@@ -35,7 +35,7 @@
             <h1>Places</h1>
             <ul>
                 <li ng-repeat="place in places.list">
-                    <div class="info" ng-click="placeInfo(place)">
+                    <div class="info" ng-click="placeInfo(place, $index)">
                         <span class="type">{{ place.categories[0].name }}</span>
                         <h2>
                             <span class="marker">{{ ($index + 1) }}</span>
