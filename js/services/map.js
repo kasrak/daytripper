@@ -159,12 +159,17 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     };
 
     map.replaceRoute = function(a,b) {
-        a.setMap(null);
-        a.setPanel(null);
-        b.setMap(map.map);
-        map.map.fitBounds(b.directions.routes[0].bounds);
-        map.map.setZoom(map.map.getZoom()-1);
-        b.setPanel($('.col2 .directions')[0]);
+        _.each(routes, function(leg,i) {
+            if (route_ind[i] == a) {
+                leg.setMap(null);
+                leg.setPanel(null);
+            }
+            else if (route_ind[i] == b) {
+                leg.setMap(map.map);
+                map.map.fitBounds(leg.directions.routes[0].bounds);
+                map.map.setZoom(map.map.getZoom()-1);
+                leg.setPanel($('.col2 .directions')[0]);
+            }
     };
 
     map.unhighlight = function() {
