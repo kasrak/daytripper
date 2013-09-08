@@ -35,7 +35,7 @@
 
                 <input type="text" placeholder="Address" class="address" ng-model="addressInput">
 
-                <button ng-hide="addresses.list.length > 0 || !currentAddress"
+                <button ng-hide="addresses.list.length > 0 || !places.hotel"
                         ng-click="startPlanning()">Plan my day</button>
 
                 <ul class="autocomplete" ng-show="addresses.list.length > 0">
@@ -47,7 +47,7 @@
                 </ul>
             </div>
             <div class="loading" ng-hide="!loading">
-                <div class="message">Planning your day in {{ currentAddress | addr_part:'locality'  }}...</div>
+                <div class="message">Planning your day in {{ places.hotel | addr_part:'locality'  }}...</div>
                 <div class="progress"></div>
             </div>
         </div>

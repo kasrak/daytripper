@@ -1,4 +1,4 @@
-app.factory('Map', function(Matrix) {
+app.factory('Map', function($rootScope, Matrix, Places) {
     var map = {};
     var $mapbox;
     var styles = [
@@ -140,16 +140,33 @@ app.factory('Map', function(Matrix) {
         }
     };
 
-    map.marker = function(lat,lon,label) {
-            var bounds = map.map.getBounds ();
-            var position = new google.maps.LatLng(lat,lon);
-            var marker = new google.maps.Marker ({
+    $rootScope.$watch(function() {
+        return Places.list;
+    }, function(newVal, oldVal) {
+        if (newVal == oldVal) return;
+
+        var bounds = new google.maps.LatLngBounds();
+
+        var position = new google.maps.LatLng(Places.hotel.geometry.location.lat,
+                                              Places.hotel.geometry.location.lng);
+        new google.maps.Marker({
+            position: position,
+            map: map.map,
+            icon: '/img/pinh.png'
+        });
+        bounds.extend(position);
+
+        var markers = _.map(newVal, function(place, i) {
+            var position = new google.maps.LatLng(place.location.lat, place.location.lng);
+            new google.maps.Marker({
                 position: position,
                 map: map.map,
-                icon: "http://frobeo.com/img/pin" + label + ".png"
+                icon: '/img/pin' + (i + 1) + '.png'
             });
             bounds.extend(position);
-            map.map.fitBounds(bounds);
-        }
+        });
+
+        map.map.fitBounds(bounds);
+    });
     return map;
 });

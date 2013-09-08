@@ -28,9 +28,9 @@ app.filter('addr_part', function() {
 app.controller('PlanFormController', function($scope, $element, Addresses, Map, Places, Progress) {
     $scope.addresses = Addresses;
     $scope.addressInput = null;
-    $scope.currentAddress = null;
 
     $scope.loading = false;
+    $scope.places = Places;
 
     var shouldAutocomplete = true;
 
@@ -46,7 +46,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
     $scope.setAddress = function(address, startImmediately) {
         shouldAutocomplete = false;
         Addresses.clear();
-        $scope.currentAddress = address;
+        $scope.places.hotel = address;
         $scope.addressInput = address.formatted_address;
         Map.setCenter(address.geometry.location.lat, address.geometry.location.lng, 14);
 
@@ -59,12 +59,12 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
         $scope.loading = true;
 
         Progress.reset();
-        Places.load($scope.currentAddress.geometry.location.lat,
-                   $scope.currentAddress.geometry.location.lng);
+        Places.show();
+        Places.load($scope.places.hotel.geometry.location.lat,
+                   $scope.places.hotel.geometry.location.lng);
 
         Progress.onDone = function() {
             window.setTimeout(function() {
-                Places.show();
                 $($element).hide();
             }, 700);
         };
@@ -81,6 +81,10 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
                 } else if (e.keyCode == 38) { // up
                     Addresses.up();
                 } else if (e.keyCode == 13) { // enter
+                    if (!Addresses.selected) {
+                        Addresses.down();
+                    }
+
                     if (Addresses.selected) {
                         $scope.setAddress(Addresses.selected, true);
                     }
@@ -94,7 +98,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
                 longitude = data.coords.longitude;
             $.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true', function(data) {
                 $scope.$apply(function() {
-                    if ($scope.currentAddress === null) {
+                    if ($scope.places.hotel === null) {
                         $scope.setAddress(data.results[0]);
                     }
                 });
