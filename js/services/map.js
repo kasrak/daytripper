@@ -147,6 +147,8 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     map.highlight = function(route) {
         _.each(routes, function(leg,i) {
             if (route == route_ind[i]) {
+                leg.setMap(null);
+                leg.setPanel(null);
                 leg.setMap(map.map);
                 map.map.fitBounds(leg.directions.routes[0].bounds);
                 map.map.setZoom(map.map.getZoom()-1);

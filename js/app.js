@@ -165,17 +165,19 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
 
         Map.highlight($scope.selectedPlaceNumber);
 
-        Foursquare.getInfo(newVal.id, function(info, cached) {
-            var fn = function() {
-                $scope.selectedPlaceInfo = info;
-            };
+        if (newVal.id) {
+            Foursquare.getInfo(newVal.id, function(info, cached) {
+                var fn = function() {
+                    $scope.selectedPlaceInfo = info;
+                };
 
-            if (cached) {
-                fn();
-            } else {
-                $scope.$apply(fn);
-            }
-        });
+                if (cached) {
+                    fn();
+                } else {
+                    $scope.$apply(fn);
+                }
+            });
+        }
     });
 
     $scope.placeInfo = function(place, idx) {
