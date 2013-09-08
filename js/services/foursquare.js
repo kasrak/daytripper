@@ -71,7 +71,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.progress = null;
 		this.foundcb = null;
 		
-		this.getInfo("3fd66200f964a5209df11ee3", null);
+		//this.getInfo("3fd66200f964a5209df11ee3", null);
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -317,7 +317,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   Foursquare.prototype.getTips = function(venueId, jxhr, info){
 	var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
 
-    console.log(url);
 	jxhr.push(
 		$.getJSON(url, function(data){
 			info.tips = data.response.tips.items;
@@ -332,7 +331,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   Foursquare.prototype.getPhotos = function(venueId, jxhr, info){
 		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/photos?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
 
-    	console.log(url);
    jxhr.push( 
 		$.getJSON(url, function(data){
 			info.photos = data.response.photos.groups[1].items;
@@ -347,8 +345,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   Foursquare.prototype.getLinks = function(venueId, jxhr, info){
 		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/links?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
 
-    	console.log(url);
-    
 	jxhr.push(
 		$.getJSON(url, function(data){
 			info.links = data.response.links.items;
