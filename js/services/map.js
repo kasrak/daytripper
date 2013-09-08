@@ -119,7 +119,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                 Matrix.run([origin],[destination],function(response,status) {
                   var req = {
                     origin: origin,
-                    destination: destination,
+                    destination: destination
                   };
                   if (response.rows[0].elements[0].distance.value > 1000) {
                         req.travelMode = google.maps.DirectionsTravelMode.DRIVING;
@@ -145,6 +145,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     $rootScope.$watch(function() {
         return Places.list;
     }, function(newVal, oldVal) {
+        console.log(newVal, oldVal, newVal == oldVal);
         if (newVal == oldVal) return;
 
         _.each(markers, function(marker) {
@@ -191,6 +192,6 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         map.calcRoute(points);
         map.map.fitBounds(bounds);
         map.map.setZoom(map.map.getZoom()-1);
-    });
+    }, true);
     return map;
 });

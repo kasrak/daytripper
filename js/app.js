@@ -67,8 +67,9 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
 
         Progress.reset();
         Places.show();
-        Places.load($scope.places.hotel.geometry.location.lat,
-                   $scope.places.hotel.geometry.location.lng);
+
+        var hotel = $scope.places.hotel;
+        Places.load(hotel.geometry.location.lat, hotel.geometry.location.lng);
 
         Progress.onDone = function() {
             window.setTimeout(function() {
@@ -127,10 +128,6 @@ app.controller('PlacesController', function($scope, Places) {
     $scope.resetPlaces = function() {
         $('.screen-plan-form').show();
         angular.element($('.screen-plan-form')[0]).scope().reset();
-    };
-
-    $scope.refreshPlaces = function() {
-        console.log('refresh');
     };
 
     $scope.replacePlace = function(place, idx) {
