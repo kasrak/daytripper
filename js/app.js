@@ -133,8 +133,25 @@ app.controller('PlacesController', function($scope, Places) {
         console.log('refresh');
     };
 
-    $scope.removePlace = function(place) {
-        console.log('remove', place);
+    $scope.replacePlace = function(place, idx) {
+        var type;
+        switch (idx) {
+            case 0:
+                type = 'B';
+                break;
+            case 2:
+                type = 'L';
+                break;
+            case 4:
+                type = 'D';
+                break;
+            case 6:
+                type = 'N';
+                break;
+            default:
+                type = 'T';
+        }
+        Places.replace(idx, type);
     };
 
     $scope.placeInfo = function(place) {

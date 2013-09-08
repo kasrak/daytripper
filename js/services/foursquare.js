@@ -83,7 +83,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 
 	Foursquare.prototype.getMiddleVenue = function(ll1, ll2, type){
 		var ll = [(ll1[0]+ll2[0])/2, (ll1[1]+ll2[1])/2];
-		var radius = 500; 
+		var radius = 500;
 
 		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
@@ -95,14 +95,21 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	};
 
 	Foursquare.prototype.replaceVenue = function(index, type, foundcb){
+        /* Types:
+         * B    breakfast
+         * L    lunch
+         * D    dinner
+         * T    general tourism
+         * N    nightlife
+         */
 		this.foundcb = foundcb;
 		this.index = index;
 		var radius = 500;
 		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
 		Matrix.run([pointa], [pointb], function(response, status){
-             radius = response.rows[0].elements[0].distance.value/2;
-			 if (radius < 500)
+            radius = response.rows[0].elements[0].distance.value/2;
+            if (radius < 500)
 				radius = 500;
 		});
 		this.call4sq(ll, radius, type, 'r');
@@ -124,12 +131,12 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 
 
 	Foursquare.prototype.replace = function(venues){
-		this.route[this.index] = venues[this.getBest(venues)];	
+		this.route[this.index] = venues[this.getBest(venues)];
 		this.foundcb();
 	};
 
 	Foursquare.prototype.alreadyInRoute = function(venue){
-		if (this.route == null)
+		if (this.route === null)
 			return false;
 		for (var i = 0; i < this.route.length; i++)
 			if (this.route[i].id == venue.id)
@@ -150,7 +157,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		});
 
 		var temp = scores.slice(0);
-		temp.sort(function(a,b){return a-b});
+		temp.sort(function(a,b){return a-b;});
 		var picks;
 		if (venues.length >10)
 			picks = 10;
@@ -160,7 +167,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	};
 
 	Foursquare.prototype.append = function(venues){
-		if (venues != null){
+		if (venues !== null){
 			switch(this.route.length){
         case 0:
         case 1:
@@ -259,14 +266,14 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 				self.done();
 				self.progress(1);
 			}
-			else if (action == 'a')	
+			else if (action == 'a')
 				self.append(data);
 			else if (action == 'r')
 				self.replace(data);
 		})
 		.fail(function(error){
 			console.log("Foursquare search error: ", error);
-			if (action == 'a')	
+			if (action == 'a')
 				self.append(null);
 			else if (action == 'r')
 				self.replace(null);
