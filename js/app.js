@@ -81,6 +81,11 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
                 } else if (e.keyCode == 38) { // up
                     Addresses.up();
                 } else if (e.keyCode == 13) { // enter
+                    if ($scope.places.hotel && $scope.places.hotel.formatted_address == $scope.addressInput) {
+                        $scope.setAddress($scope.places.hotel, true);
+                        return;
+                    }
+
                     if (!Addresses.selected) {
                         Addresses.down();
                     }
@@ -113,18 +118,19 @@ app.controller('PlacesController', function($scope, Places) {
     $scope.places = Places;
 
     $scope.resetPlaces = function() {
+        console.log('reset');
     };
 
     $scope.refreshPlaces = function() {
+        console.log('refresh');
     };
 
     $scope.removePlace = function(place) {
+        console.log('remove', place);
     };
 
     $scope.placeInfo = function(place) {
-    };
-
-    $scope.placeMap = function(place) {
+        console.log('info', place);
     };
 });
 

@@ -201,20 +201,22 @@ button:active {
   background: #42a777;
 }
 .screen-places ul li {
-  padding: 10px;
   border-bottom: 1px solid #aaa;
   clear: both;
-  cursor: pointer;
   position: relative;
+}
+.screen-places ul li div.info {
+  padding: 10px;
+  cursor: pointer;
+}
+.screen-places ul li div.info:active {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
 }
 .screen-places ul li:hover {
   background: #fff;
 }
 .screen-places ul li:hover .controls {
   display: block;
-}
-.screen-places ul li:active {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
 }
 .screen-places ul li .marker {
   display: inline-block;
@@ -251,14 +253,14 @@ button:active {
   right: 0;
   top: 0;
   bottom: 0;
-  background: #ddd;
   width: 20px;
   text-align: center;
   display: none;
-  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+  color: #999;
 }
 .screen-places ul li .controls span.control {
   display: block;
+  cursor: pointer;
 }
 .screen-places ul li .controls span.control i {
   display: block;
@@ -266,4 +268,7 @@ button:active {
 }
 .screen-places ul li .controls span.control:hover {
   color: #699e6b;
+}
+.screen-places ul li .controls span.control:hover .icon-remove {
+  color: #f56754;
 }

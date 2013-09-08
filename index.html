@@ -60,22 +60,17 @@
             <h1>Places</h1>
             <ul>
                 <li ng-repeat="place in places.list">
-                    <span class="type">{{ place.categories[0].name }}</span>
-                    <h2>
-                        <span class="marker">{{ ($index + 1) }}</span>
-                        {{ place.name }}
-                    </h2>
-                    <span class="address">{{ place.location.address }}</span>
-
+                    <div class="info" ng-click="placeInfo(place)">
+                        <span class="type">{{ place.categories[0].name }}</span>
+                        <h2>
+                            <span class="marker">{{ ($index + 1) }}</span>
+                            {{ place.name }}
+                        </h2>
+                        <span class="address">{{ place.location.address }}</span>
+                    </div>
                     <div class="controls">
                         <span class="control">
                             <i class="icon-remove" ng-click="removePlace(place)"></i>
-                        </span>
-                        <span class="control">
-                            <i class="icon-info" ng-click="placeInfo(place)"></i>
-                        </span>
-                        <span class="control">
-                            <i class="icon-map-marker" ng-click="placeMap(place)"></i>
                         </span>
                     </div>
                 </li>
