@@ -77,6 +77,9 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
                 $($element).hide();
             }, 700);
         };
+
+        mixpanel.track("Create itinerary", 
+        { address: $scope.addressInput });
     };
 
     $(function() {
