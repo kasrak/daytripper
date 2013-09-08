@@ -70,7 +70,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
-		
+
 		//this.getInfo("3fd66200f964a5209df11ee3", null);
     };
 
@@ -234,7 +234,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 			case 7:
 				this.progress(1);
 				this.done();
-				console.log(this.route);
 				break;
 		}
 	};
@@ -297,13 +296,13 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   var _venueCache = {};
   Foursquare.prototype.getInfo = function(venueId, infocb){
     if (venueId in _venueCache) {
-        infocb(_venueCache[venueId]);
+        infocb(_venueCache[venueId], true);
         return;
     }
 
-    var jxhr = []; 
+    var jxhr = [];
 	var info = {tips:null, photos:null, links:null};
-	
+
 	this.getTips(venueId, jxhr, info);
 	this.getPhotos(venueId, jxhr, info);
 	this.getLinks(venueId, jxhr, info);
@@ -311,8 +310,8 @@ app.factory('Foursquare', function($rootScope, Matrix) {
     $.when.apply($, jxhr).done(function(){
 		infocb(info);
         _venueCache[venueId] = info;
-    }); 
-  };    
+    });
+  };
 
   Foursquare.prototype.getTips = function(venueId, jxhr, info){
 	var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
@@ -331,9 +330,12 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   Foursquare.prototype.getPhotos = function(venueId, jxhr, info){
 		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/photos?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
 
-   jxhr.push( 
+   jxhr.push(
 		$.getJSON(url, function(data){
-			info.photos = data.response.photos.groups[1].items;
+            if (!data.response.photos.groups[1]) {
+                return;
+            }
+			info.photos = data.response.photos.groups[1].items.slice(0, 3);
 		})
 		.fail(function(error){
 			console.log("Foursquare api error: ", error);

@@ -189,6 +189,25 @@ button {
 
         div.info {
             padding: 10px;
+            position: relative;
+
+            .marker {
+                display: inline-block;
+                font-size: 10pt;
+                font-weight: 700;
+                padding: 5px;
+                color: #fff;
+                border-radius: 50px;
+                text-align: center;
+                min-width: 20px;
+                height: 20px;
+                line-height: 1.6;
+                text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+                margin: -3px 6px 10px 0;
+                position: absolute;
+                left: 10px;
+                top: 32px;
+            }
 
             .type {
                 text-transform: uppercase;
@@ -200,17 +219,26 @@ button {
                 width: 220px;
                 overflow: hidden;
                 display: inline-block;
+                margin-left: 38px;
             }
 
             .address {
                 font-size: 12pt;
-                margin-left: 1px;
+                margin-left: 38px;
                 color: #555;
             }
 
             h2 {
                 margin: 0;
+                margin-left: 38px;
                 font-size: 14pt;
+            }
+        }
+
+        .photos {
+            .photo {
+                width: 33%;
+                float: left;
             }
         }
     }
@@ -253,18 +281,18 @@ button {
         }
     }
 
+    li:nth-child(1) .marker, .marker.idx1 { background: rgb(116, 180, 34); }
+    li:nth-child(2) .marker, .marker.idx2 { background: #E66711; }
+    li:nth-child(3) .marker, .marker.idx3 { background: #E25353; }
+    li:nth-child(4) .marker, .marker.idx4 { background: #9761A2; }
+    li:nth-child(5) .marker, .marker.idx5 { background: #4967C7; }
+    li:nth-child(6) .marker, .marker.idx6 { background: #1DA2AD; }
+    li:nth-child(7) .marker, .marker.idx7 { background: #42a777; }
+
     ul {
         list-style: none;
         margin: 0;
         padding: 0;
-
-        li:nth-child(1) .marker { background: rgb(116, 180, 34); }
-        li:nth-child(2) .marker { background: #E66711; }
-        li:nth-child(3) .marker { background: #E25353; }
-        li:nth-child(4) .marker { background: #9761A2; }
-        li:nth-child(5) .marker { background: #4967C7; }
-        li:nth-child(6) .marker { background: #1DA2AD; }
-        li:nth-child(7) .marker { background: #42a777; }
 
         li {
             border-bottom: 1px solid #aaa;
@@ -294,7 +322,6 @@ button {
 
                 .address {
                     font-size: 12pt;
-                    margin-left: 1px;
                     color: #555;
                     margin-left: 38px;
                 }
