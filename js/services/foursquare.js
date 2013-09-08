@@ -294,7 +294,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 			console.log("Foursquare api error: ", error);
       		var status = "failed";
 			tipscb(error, status);	
-		})
 		});
   };
 
