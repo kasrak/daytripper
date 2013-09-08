@@ -146,6 +146,7 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         _.each(routes, function(leg,i) {
             if (route != (i+1)) {
                 leg.setMap(null);
+            }
         });
     };
 
