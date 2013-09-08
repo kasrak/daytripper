@@ -70,8 +70,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
-		//this.ll = [43.652, -79.382];
-		//this.getNext([43.652, -79.382], 'B');
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -110,6 +108,15 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 
 	Foursquare.prototype.getNext = function(ll, type) {
 		var radius = 8000;
+    if (this.route.length > 0){
+      var prev;
+      if (this.route.length == 1)
+        prev = this.ll;
+      else
+        prev = [this.route[0].location.lat, this.route[0].location.lng];
+      ll[0] = ll[0] + 0.5*(ll[0] - prev[0]);
+      ll[1] = ll[1] + 0.5*(ll[1] - prev[1]);
+    }
 		this.call4sq(ll, radius, type, 'a');
     };
 
