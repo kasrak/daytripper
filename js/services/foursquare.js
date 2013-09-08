@@ -70,7 +70,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
-    	this.getTips("4a723a9ff964a520a8da1fe3", null);
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -105,6 +104,21 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.foundcb = foundcb;
 		this.index = index;
 		var radius = 500;
+		if (index > 0 && index < this.route.length - 1){
+			ll2 = [this.route[index-1].location.lat, this.route[index-1].location.lng];
+			ll1 = [this.route[index+1].location.lat, this.route[index+1].location.lng];
+		}else{
+			if (index == 0){
+				ll2 = [this.route[1].location.lat, this.route[1].location.lng];
+				ll1 = this.ll;
+			}else if (index == this.route.length-1){
+				ll2 = [this.route[index-1].location.lat, this.route[index-1].location.lng];
+				ll1 = this.ll;
+			}
+		}
+
+		var ll = [(ll1[0]+ll2[0])/2, (ll1[1]+ll2[1])/2];
+	
 		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
 		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
 		Matrix.run([pointa], [pointb], function(response, status){
