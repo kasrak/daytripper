@@ -123,7 +123,7 @@ app.controller('PlanFormController', function($scope, $element, Addresses, Map, 
     });
 });
 
-app.controller('PlacesController', function($scope, Places, Map) {
+app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
     $scope.places = Places;
 
     $scope.resetPlaces = function() {
@@ -153,6 +153,15 @@ app.controller('PlacesController', function($scope, Places, Map) {
     };
 
     $scope.selectedPlace = null;
+    $scope.$watch('selectedPlace', function(newVal, oldVal) {
+        if (newVal == oldVal) return;
+
+        Foursquare.getInfo(newVal.id, function(info) {
+            $scope.$apply(function() {
+                $scope.selectedPlace.info = info;
+            });
+        });
+    });
 
     $scope.placeInfo = function(place, idx) {
         $scope.selectedPlace = place;
