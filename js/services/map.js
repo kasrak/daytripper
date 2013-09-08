@@ -150,9 +150,10 @@ app.factory('Map', function($rootScope, Matrix, Places) {
                 leg.setMap(map.map);
                 map.map.fitBounds(leg.directions.routes[0].bounds);
                 map.map.setZoom(map.map.getZoom()-1);
-                leg.directions.setPanel(document.getElementById(''));
+                leg.setPanel($('.col2 .directions')[0]);
             } else {
                 leg.setMap(null);
+                leg.setPanel(null);
             }
         });
     };
