@@ -70,6 +70,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
+		this.getPhotos("3fd66200f964a5209df11ee3", null);
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -300,7 +301,6 @@ app.factory('Foursquare', function($rootScope, Matrix) {
     console.log(url);
     
 		$.getJSON(url, function(data){
-			console.log(data);
       		var status = "success";
 			tipscb(data, status);	
 		})
@@ -308,6 +308,23 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 			console.log("Foursquare api error: ", error);
       		var status = "failed";
 			tipscb(error, status);	
+		});
+  };
+
+  Foursquare.prototype.getPhotos = function(venueId, photoscb){
+		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/photos?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
+
+    	console.log(url);
+    
+		$.getJSON(url, function(data){
+			console.log(data);
+      		var status = "success";
+			photoscb(data, status);	
+		})
+		.fail(function(error){
+			console.log("Foursquare api error: ", error);
+      		var status = "failed";
+			photoscb(error, status);	
 		});
   };
 
