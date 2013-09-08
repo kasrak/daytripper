@@ -59,6 +59,7 @@ button:active {
   left: 0;
   right: 0;
   bottom: 0;
+  transition: left 200ms;
 }
 #mapbox .map {
   width: 100%;
