@@ -30,30 +30,6 @@
         <div id="mapbox">
             <div class="map"></div>
         </div>
-        <div class="screen-plan-form" ng-controller="PlanFormController">
-            <div class="main" ng-show="!loading">
-                <img src="img/logo.png" alt="Day Tripper" width="394">
-                <h1>Where are you staying?</h1>
-
-                <input type="text" placeholder="Address" class="address" ng-model="addressInput">
-
-                <button ng-hide="addresses.list.length > 0 || !places.hotel"
-                        ng-click="startPlanning()">Plan my day</button>
-
-                <ul class="autocomplete" ng-show="addresses.list.length > 0">
-                    <li ng-repeat="address in addresses.list"
-                        ng-click="setAddress(address, 1)"
-                        ng-class="{ selected: (addresses.selected == address) }">
-                    {{ address.formatted_address }}
-                    </li>
-                </ul>
-            </div>
-            <div class="loading" ng-hide="!loading">
-                <div class="message">Planning your day in {{ places.hotel | addr_part:'locality'  }}...</div>
-                <div class="progress"></div>
-            </div>
-        </div>
-
         <div class="screen-places" ng-controller="PlacesController">
             <div class="controls-top">
                 <i class="icon-reply" ng-click="resetPlaces()"></i>
@@ -78,5 +54,29 @@
                 </li>
             </ul>
         </div>
+        <div class="screen-plan-form" ng-controller="PlanFormController">
+            <div class="main" ng-show="!loading">
+                <img src="img/logo.png" alt="Day Tripper" width="394">
+                <h1>Where are you staying?</h1>
+
+                <input type="text" placeholder="Address" class="address" ng-model="addressInput">
+
+                <button ng-hide="addresses.list.length > 0 || !places.hotel"
+                        ng-click="startPlanning()">Plan my day</button>
+
+                <ul class="autocomplete" ng-show="addresses.list.length > 0">
+                    <li ng-repeat="address in addresses.list"
+                        ng-click="setAddress(address, 1)"
+                        ng-class="{ selected: (addresses.selected == address) }">
+                    {{ address.formatted_address }}
+                    </li>
+                </ul>
+            </div>
+            <div class="loading" ng-hide="!loading">
+                <div class="message">Planning your day in {{ places.hotel | addr_part:'locality'  }}...</div>
+                <div class="progress"></div>
+            </div>
+        </div>
+
     </body>
 </html>
