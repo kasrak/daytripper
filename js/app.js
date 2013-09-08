@@ -157,9 +157,9 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
         if (newVal == oldVal) return;
 
         if (newVal == 'to') {
-            Map.replaceRoute($scope.selectedPlaceNumber - 1, $scope.selectedPlaceNumber);
+            Map.highlight($scope.selectedPlaceNumber);
         } else { // from
-            Map.replaceRoute($scope.selectedPlaceNumber - 2, $scope.selectedPlaceNumber - 1);
+            Map.highlight($scope.selectedPlaceNumber - 1);
         }
     });
     $scope.selectedPlace = null;
@@ -172,6 +172,13 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
             Map.unhighlight();
             return;
         }
+
+        if ($scope.directions == 'to') {
+            Map.highlight($scope.selectedPlaceNumber);
+        } else { // from
+            Map.highlight($scope.selectedPlaceNumber - 1);
+        }
+
         Foursquare.getInfo(newVal.id, function(info, cached) {
             var fn = function() {
                 $scope.selectedPlaceInfo = info;
