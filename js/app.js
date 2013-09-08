@@ -162,24 +162,38 @@ app.controller('PlacesController', function($scope, Places, Map, Foursquare) {
             Map.unhighlight();
             return;
         }
-        Foursquare.getInfo(newVal.id, function(info, cached) {
-            var fn = function() {
-                $scope.selectedPlaceInfo = info;
-                console.log(info);
-            };
 
-            if (cached) {
-                fn();
-            } else {
-                $scope.$apply(fn);
-            }
-        });
+        Map.highlight($scope.selectedPlaceNumber);
+
+        if (newVal.id) {
+            Foursquare.getInfo(newVal.id, function(info, cached) {
+                var fn = function() {
+                    $scope.selectedPlaceInfo = info;
+                };
+
+                if (cached) {
+                    fn();
+                } else {
+                    $scope.$apply(fn);
+                }
+            });
+        }
     });
 
     $scope.placeInfo = function(place, idx) {
+        var hotel = {
+            name: 'Hotel',
+            hotel: true
+        };
         $scope.selectedPlace = place;
+        $scope.selectedPlaceNext = Places.list[idx + 1] || hotel;
         $scope.selectedPlaceNumber = idx + 1;
         Map.highlight(idx);
+    };
+
+    $scope.nextPlace = function() {
+        $scope.placeInfo($scope.selectedPlaceNext,
+                         $scope.selectedPlaceNumber == 7 ? -1 : $scope.selectedPlaceNumber);
     };
 });
 

@@ -147,6 +147,8 @@ app.factory('Map', function($rootScope, Matrix, Places) {
     map.highlight = function(route) {
         _.each(routes, function(leg,i) {
             if (route == route_ind[i]) {
+                leg.setMap(null);
+                leg.setPanel(null);
                 leg.setMap(map.map);
                 map.map.fitBounds(leg.directions.routes[0].bounds);
                 map.map.setZoom(map.map.getZoom()-1);
@@ -197,20 +199,37 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         var points = [];
         points.push(hposition);
 
-        markers.push(new google.maps.Marker({
+        var marker = new google.maps.Marker({
             position: hposition,
             map: map.map,
             icon: '/img/pinh.png'
-        }));
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            console.log(Places.hotel);
+            $rootScope.$apply(function() {
+                angular.element($('.screen-places')[0]).scope().placeInfo({
+                    name: 'Hotel',
+                    location: {
+                        address: Places.hotel.formatted_address
+                    }
+                }, -1);
+            });
+        });
 
         _.each(newVal, function(place, i) {
             var position = new google.maps.LatLng(place.location.lat, place.location.lng);
             points.push(position);
-            markers.push(new google.maps.Marker({
+            var marker = new google.maps.Marker({
                 position: position,
                 map: map.map,
                 icon: '/img/pin' + (i + 1) + '.png'
-            }));
+            });
+            markers.push(marker);
+            google.maps.event.addListener(marker,'click',function() {
+                $rootScope.$apply(function() {
+                    angular.element($('.screen-places')[0]).scope().placeInfo(place, i);
+                });
+            });
         });
 
         _.each(points,function(point) {

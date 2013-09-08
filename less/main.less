@@ -247,6 +247,30 @@ button {
                 float: left;
             }
         }
+
+        .directions, .directions-header {
+            clear: both;
+            padding: 10px 10px 0 10px;
+        }
+
+        .directions {
+            padding-top: 5px;
+        }
+
+        .directions-header {
+            small {
+                display: block;
+                color: #666;
+            }
+
+            a {
+                cursor: pointer;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .controls-top {
@@ -287,6 +311,7 @@ button {
         }
     }
 
+    .marker.hotel { background: #fff; color: #111 !important; text-shadow: none !important; }
     li:nth-child(1) .marker, .marker.idx1 { background: rgb(116, 180, 34); }
     li:nth-child(2) .marker, .marker.idx2 { background: #E66711; }
     li:nth-child(3) .marker, .marker.idx3 { background: #E25353; }
