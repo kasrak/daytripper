@@ -1,4 +1,4 @@
-app.factory('Foursquare', function($rootScope) {
+app.factory('Foursquare', function($rootScope, Matrix) {
 	//App Credentials
 	var CLIENT_ID = "HE5JMHFU0A4ZWQWYZPUTHH2JID4DBE2IJP5ICMVHJXCVNGZ2";
 	var CLIENT_SECRET = "2O4ZBJ1EWCCEYKTTPYBPEBI3N4YY4ZBSGD3M3X4STRPBUMPX";
@@ -87,16 +87,26 @@ app.factory('Foursquare', function($rootScope) {
 
 	Foursquare.prototype.getMiddleVenue = function(ll1, ll2, type){
 		var ll = [(ll1[0]+ll2[0])/2, (ll1[1]+ll2[1])/2];
-		var radius = 8000; //to be calculated
+		var radius = 1000; 
+
+		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
+		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
+		Matrix.run([pointa], [pointb], function(response, status){
+            radius = response.rows[0].elements[0].distance.value/2;
+		});
+
 		this.call4sq(ll, radius, type, 'a');
 	};
 
 	Foursquare.prototype.replaceVenue = function(index, type, foundcb){
 		this.foundcb = foundcb;
 		this.index = index;
-		var lat = (this.route[index-1].location.lat + this.route[index+1].location.lat)/2;
-		var lng = (this.route[index-1].location.lng + this.route[index+1].location.lng)/2;
-		var radius = 8000; //to be calculated
+		var radius = 1000;
+		var pointa = new google.maps.LatLng(ll1[0], ll1[1]);
+		var pointb = new google.maps.LatLng(ll2[0], ll2[1]);
+		Matrix.run([pointa], [pointb], function(response, status){
+             radius = response.rows[0].elements[0].distance.value/2;
+		});
 		this.call4sq(ll, radius, type, 'r');
 	};
 
@@ -145,36 +155,36 @@ app.factory('Foursquare', function($rootScope) {
 		if (venues != null)
 			this.route.push(venues[this.getBest(venues)]);
 
-		console.log(this.route);
 
 		switch(this.route.length){
 			case 1:
 				this.getNext([this.route[0].location.lat,this.route[0].location.lng], 'T');
-				this.progress(1/6);
+				this.progress(1/7);
 				break;
 			case 2:
 				this.getNext([this.route[1].location.lat,this.route[1].location.lng], 'L');
-				this.progress(2/6);
+				this.progress(2/7);
 				break;
 			case 3:
 				this.getNext([this.route[2].location.lat,this.route[2].location.lng], 'T');
-				this.progress(3/6);
+				this.progress(3/7);
 				break;
 			case 4:
 				this.getNext([this.route[3].location.lat,this.route[3].location.lng], 'D');
-				this.progress(4/6);
+				this.progress(4/7);
 				break;
 			case 5:
 				this.getNext([this.route[4].location.lat,this.route[4].location.lng], 'T');
-				this.progress(5/6);
+				this.progress(5/7);
 				break;
 			case 6:
 				this.getMiddleVenue([this.route[4].location.lat,this.route[4].location.lng],this.ll, 'N');
-				this.progress(6/6);
+				this.progress(6/7);
 				break;
 			case 7:
-				console.log(this.route);
+				this.progress(1);
 				this.done();
+				console.log(this.route);
 				break;
 		}
 	};
@@ -218,9 +228,11 @@ app.factory('Foursquare', function($rootScope) {
 
 		$.getJSON(url, function(data){
 			data = data.response.groups[0].items;
-			if (data.length <1)
-				this.done();
-			if (action == 'a')	
+			if (data.length <1){
+				self.done();
+				self.progress(1);
+			}
+			else if (action == 'a')	
 				self.append(data);
 			else if (action == 'r')
 				self.replace(data);
