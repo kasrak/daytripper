@@ -197,20 +197,26 @@ app.factory('Map', function($rootScope, Matrix, Places) {
         var points = [];
         points.push(hposition);
 
-        markers.push(new google.maps.Marker({
+        var marker = new google.maps.Marker({
             position: hposition,
             map: map.map,
             icon: '/img/pinh.png'
-        }));
+        });
 
         _.each(newVal, function(place, i) {
             var position = new google.maps.LatLng(place.location.lat, place.location.lng);
             points.push(position);
-            markers.push(new google.maps.Marker({
+            var marker = new google.maps.Marker({
                 position: position,
                 map: map.map,
                 icon: '/img/pin' + (i + 1) + '.png'
-            }));
+            });
+            markers.push(marker);
+            google.maps.event.addListener(marker,'click',function() {
+                $rootScope.$apply(function() {
+                    angular.element($('.screen-places')[0]).scope().placeInfo(place, i);
+                });
+            });
         });
 
         _.each(points,function(point) {
