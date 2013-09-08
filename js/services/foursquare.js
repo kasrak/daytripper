@@ -70,7 +70,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		this.done = null;
 		this.progress = null;
 		this.foundcb = null;
-    this.getTips("4a723a9ff964a520a8da1fe3", null);
+    	this.getTips("4a723a9ff964a520a8da1fe3", null);
     };
 
 	Foursquare.prototype.getRoute = function(ll, done, progress){
@@ -279,12 +279,15 @@ app.factory('Foursquare', function($rootScope, Matrix) {
     console.log(url);
     
 		$.getJSON(url, function(data){
-			var data = data.response.groups[0].items;
-      var status = "success";
+			console.log(data);
+      		var status = "success";
+			tipscb(data, status);	
 		})
 		.fail(function(error){
 			console.log("Foursquare api error: ", error);
-      var status = "failed";
+      		var status = "failed";
+			tipscb(error, status);	
+		})
 		});
   };
 
