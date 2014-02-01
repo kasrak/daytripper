@@ -9,7 +9,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 	var BAR = "4bf58dd8d48988d116941735";
 	var LANDMARKS = "4bf58dd8d48988d12d941735";
 	var AQUARIUM = "4fceea171983d5d06c3e9823";
-	var	GALLERY = "4bf58dd8d48988d1e2931735";
+	var GALLERY = "4bf58dd8d48988d1e2931735";
 	var CASINO = "4bf58dd8d48988d17c941735";
 	var ENTERTAINMENT = "4bf58dd8d48988d1f1931735";
 	var HISTORIC = "4deefb944765f83613cdba6e";
@@ -74,8 +74,8 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 		//this.getInfo("3fd66200f964a5209df11ee3", null);
     };
 
-	Foursquare.prototype.getRoute = function(ll, done, progress){
-    this.route=[];
+    Foursquare.prototype.getRoute = function(ll, done, progress){
+        this.route=[];
 		this.ll=ll;
 		this.getNext(ll, 'T');
 		this.done = done;
@@ -314,7 +314,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   };
 
   Foursquare.prototype.getTips = function(venueId, jxhr, info){
-	var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular";
+	var url = "https://api.foursquare.com/v2/venues/"+venueId+"/tips?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&sort=popular&v=20130101";
 
 	jxhr.push(
 		$.getJSON(url, function(data){
