@@ -80,6 +80,9 @@ button:active {
 .screen-plan-form .main {
   padding: 30px 10px 10px;
 }
+.screen-plan-form p.credits a {
+  color: white;
+}
 .screen-plan-form h1 {
   line-height: 1;
   font-size: 18pt;
