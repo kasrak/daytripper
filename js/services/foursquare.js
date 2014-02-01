@@ -271,7 +271,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
 				break;
 		}
 
-		var url = "https://api.foursquare.com/v2/venues/search?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&categoryId="+getStrList(category)+"&ll="+getStrList(ll)+"&radius="+radius+"&intent=browse";
+		var url = "https://api.foursquare.com/v2/venues/search?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&categoryId="+getStrList(category)+"&ll="+getStrList(ll)+"&radius="+radius+"&intent=browse&v=20130101";
 
 		$.getJSON(url, function(data){
 			data = data.response.groups[0].items;
@@ -328,7 +328,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   };
 
   Foursquare.prototype.getPhotos = function(venueId, jxhr, info){
-		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/photos?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
+		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/photos?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v=20130101";
 
    jxhr.push(
 		$.getJSON(url, function(data){
@@ -345,7 +345,7 @@ app.factory('Foursquare', function($rootScope, Matrix) {
   };
 
   Foursquare.prototype.getLinks = function(venueId, jxhr, info){
-		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/links?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET;
+		var url = "https://api.foursquare.com/v2/venues/"+venueId+"/links?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v=20130101";
 
 	jxhr.push(
 		$.getJSON(url, function(data){
